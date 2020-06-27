@@ -5,7 +5,6 @@
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
-    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "jss-rtl": "^0.3.0",
@@ -19,7 +18,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && move ./build ../build/frontend",
+    "build": "react-scripts build && mv ./build ../build/frontend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
