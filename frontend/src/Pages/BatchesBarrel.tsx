@@ -155,19 +155,19 @@ export const BatchesBarrelPage = () => {
                 </div>
                 <Divider />
                 <List>
-                    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                    {['ניהול אצוות חביות', 'ניהול משימות', 'ניהולהערות', 'ניהול שימוש חביות'].map((text, index) => (
                         <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemIcon></ListItemIcon>
+                            <ListItemText  style={{textAlign:'right'}} primary={text} />
                         </ListItem>
                     ))}
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                    {['ניהול סוגי חביות', 'ניהול תהליכים', 'ניהול שרשראות תהליכים','ניהול משתמשים'].map((text, index) => (
                         <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemIcon></ListItemIcon>
+                            <ListItemText style={{textAlign:'right'}} primary={text} />
                         </ListItem>
                     ))}
                 </List>
