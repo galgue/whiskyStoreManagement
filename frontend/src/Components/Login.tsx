@@ -41,6 +41,7 @@ const handleClick = () => {
         <Typography component="h1" variant="h5">
           MILK & HONEY
         </Typography>
+        <img height='100px' width='100px' src='https://upload.wikimedia.org/wikipedia/commons/1/1d/Logo_Milk_%26_Honey_Distillery.jpg'/>
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"

@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         logOut:{
             color: 'white',
-            marginRight:'1020px'
+            marginRight:'77vw'
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -155,7 +155,7 @@ export const BatchesBarrelPage = () => {
                 </div>
                 <Divider />
                 <List>
-                    {['ניהול אצוות חביות', 'ניהול משימות', 'ניהולהערות', 'ניהול שימוש חביות'].map((text, index) => (
+                    {['ניהול אצוות חביות', 'ניהול משימות', 'ניהול הערות', 'ניהול שימוש חביות'].map((text, index) => (
                         <ListItem button key={text}>
                             <ListItemIcon></ListItemIcon>
                             <ListItemText  style={{textAlign:'right'}} primary={text} />
