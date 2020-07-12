@@ -7,9 +7,11 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Copyright } from './Copyright';
-import { MAIN_ROUTE, LOGIN_ROUTE } from './Routes';
-
+import { LOGIN_ROUTE, BATCHES_BARRELS_ROUTE } from './Routes';
+import { setLoggedUser } from '../Actions/actionsCreator';
+import {state} from '../interFaces';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,11 +30,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const SignIn = () => {
+  const dispatch = useDispatch();
+  const loggedUser = useSelector((state:state)=>state.appState.loggedUser);
   const classes = useStyles();
   let history = useHistory();
+  setTimeout(()=>console.log(loggedUser),2000);
 
 const handleClick = () => {
-    history.replace(MAIN_ROUTE);
+    history.replace(BATCHES_BARRELS_ROUTE);
+    dispatch(setLoggedUser(1));
 }
 
   return <Container component="main" maxWidth="xs">

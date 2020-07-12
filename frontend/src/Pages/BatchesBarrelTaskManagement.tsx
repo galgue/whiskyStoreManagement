@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BatchesTable } from '../Components/Tables/BatchesBarrelsTable';
 
-export const BatchesBarrelPage = () => {
+export const BatchesBarrelTaskManagement = () => {
     return <>
-    <h1>gfdfgdsf</h1>
+    <h1>hola</h1>
     <BatchesTable/>
     </>;
 }

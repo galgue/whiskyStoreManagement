@@ -1,8 +1,10 @@
-import React from 'react';
-import MaterialTable, { Column, Options, Action } from 'material-table';
+import React, { useState } from 'react';
+import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
+import { Typography } from '@material-ui/core';
+import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
 
 
-interface Row {
+export interface Row {
     id: number;
     barrelType: number;
     chainName: number;
@@ -11,6 +13,7 @@ interface Row {
     previousId?: number | null;
     alcoholPercentage: number;
     distillateType: number;
+    tableData?: any;
     owner: string;
     location: string;
 }
@@ -21,34 +24,26 @@ interface TableState {
 }
 
 export const BatchesTable = () => {
-
+    const [selectedRow, setSelectedRow] = useState<Row>();
+    const [openCard, setOpenCard] = useState(false);
     const [state, setState] = React.useState<TableState>({
         columns: [
             {
-                title: 'מק"ט', field: 'id', type: 'numeric',
-                cellStyle: {
-                    textAlign: 'right'
-                }
+                title: 'מק"ט', field: 'id', type: 'numeric', removable: false,
             },
             {
                 title: 'סוג חבית', field: 'barrelType',
-                cellStyle: {
-                    textAlign: 'right'
-                },
                 lookup: { 1: 'אלון', 2: 'cherry' },
             },
             {
                 title: 'שם שרשרת', field: 'chainName',
-                cellStyle: {
-                    textAlign: 'right'
-                },
+
                 lookup: { 1: 'סטנדרטי', 2: 'יישון ארוך' },
+
             },
             {
                 title: 'תקופת יישון', field: 'timeInBarrel', type: 'numeric',
-                cellStyle: {
-                    textAlign: 'right'
-                }
+
             },
             {
                 title: 'כמות נוזל במילוי', field: 'liquidQuantity', type: 'numeric',
@@ -58,35 +53,24 @@ export const BatchesTable = () => {
             },
             {
                 title: 'מק"ט אצוות חבית קודמת', field: 'previousId',
-                cellStyle: {
-                    textAlign: 'right'
-                },
+
                 lookup: { 111111: 111111, 222222: 222222 },
             },
             {
                 title: 'אחוז אלכוהול במילוי', field: 'alcoholPercentage', type: 'numeric',
-                cellStyle: {
-                    textAlign: 'right'
-                }
             },
             {
                 title: 'סוג תזקיק', field: 'distillateType',
-                cellStyle: {
-                    textAlign: 'right'
-                },
+
                 lookup: { 1: 'ניו מייק סינגל מאלט', 2: 'גין לבנטיני', 3: 'סינגל מאלט קאלסי', 4: 'ליקר רוטס' },
             },
             {
                 title: 'בעלות', field: 'owner',
-                cellStyle: {
-                    textAlign: 'right'
-                }
+
             },
             {
                 title: 'מיקום חבית במחסן', field: 'location',
-                cellStyle: {
-                    textAlign: 'right'
-                }
+
             },
         ],
         data: [
@@ -254,18 +238,46 @@ export const BatchesTable = () => {
         ],
     });
     const options: Options = {
+        draggable:false,
         headerStyle: {
             textAlign: 'right'
-        }
+        },
+        exportButton:true,
+        searchFieldAlignment: "left",
+        rowStyle: (rowData => {
+           return {backgroundColor: (selectedRow && selectedRow.id === rowData.id) ? '#EEE' : '#FFF'}
+        })
     }
 
-    return (
+    return (<>
         <MaterialTable
             title='אצוות חביות'
-            style={{ direction: 'rtl' }}
+            style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
+            onRowClick={(evt, rowData) => setSelectedRow(rowData)}
+            actions={[
+                {
+                    icon: () => <Typography>נתוני אצוות חבית</Typography>,
+                    isFreeAction: true,
+                    onClick: () => setOpenCard(true),
+                    disabled: selectedRow === undefined
+                }
+            ]}
+            components={{
+                Cell: props => {
+                    return (
+                        <MTableCell
+                            style={{ textAlign: 'right' }}
+                            {...props}
+                        />
+                    );
+                }
+            }}
             localization={{
                 toolbar: {
                     searchPlaceholder: 'חפש',
+                    exportAriaLabel:'ייצא לאקסל',
+                    exportName:'ייצא לאקסל',
+                    exportTitle:'ייצא לאקסל'
                 },
                 body: {
                     addTooltip: 'הוסף',
@@ -290,7 +302,7 @@ export const BatchesTable = () => {
                     nextTooltip: 'עמוד הבא',
                     previousTooltip: 'עמוד קודם',
 
-                }
+                },
             }}
             columns={state.columns}
             data={state.data}
@@ -307,6 +319,7 @@ export const BatchesTable = () => {
                             });
                         }, 600);
                     }),
+
                 onRowUpdate: (newData, oldData) =>
                     new Promise((resolve) => {
                         setTimeout(() => {
@@ -333,5 +346,7 @@ export const BatchesTable = () => {
                     }),
             }}
         />
+        <SimpleDialogDemo open={openCard} rowData={selectedRow as Row} />
+    </>
     );
 }
