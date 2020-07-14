@@ -1,41 +1,43 @@
-import React from 'react';
-import MaterialTable, { Column, Options, MTableCell } from 'material-table';
+import React, { useState } from 'react';
+import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
+import { Typography } from '@material-ui/core';
+import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
 
 
-interface ProccessesManagementRow {
-    id: number;
-    name: string;
-    description: string;
-    duration: number;
+interface CommentsRow {
+    id: string;
+    BarrelTypeId: string;
+    comment: string;
+    employeeId: number;
 }
 
 interface TableState {
-    columns: Array<Column<ProccessesManagementRow>>;
-    data: ProccessesManagementRow[];
+    columns: Array<Column<CommentsRow>>;
+    data: CommentsRow[];
 }
 
-export const ProccessesManagementTable = () => {
+export const CommentsTable = () => {
     const [state, setState] = React.useState<TableState>({
         columns: [
             {
-                title: 'מק"ט תהליך', field: 'id', type: 'numeric', removable: false,
+                title: 'מק"ט הערה', field: 'id',removable: false,
             },
             {
-                title: 'שם תהליך', field: 'name',
+                title: 'מק"ט סוג חבית', field: 'BarrelTypeId',removable: false,
             },
             {
-                title: 'תיאור תהליך', field: 'description',
+                title: 'הערה', field: 'comment',removable: false,
             },
             {
-                title: 'משך', field: 'duration', type: 'numeric', removable: false,
+                title: 'מספר עובד כותב הערה', field: 'employeeId', type:'numeric', removable: false,
             },
         ],
         data: [
             {
-                id: 123456,
-                name: 'יוסי',
-               description:'lfksjflksajdsa',
-               duration:600
+                id: '123456',
+                BarrelTypeId:'ddsfddse32',
+                comment:'sdgerggedfs',
+                employeeId:13214323,
             },
         ],
     });
@@ -54,7 +56,7 @@ export const ProccessesManagementTable = () => {
 
     return (<>
         <MaterialTable
-            title='ניהול תהליכים'
+            title='הערות'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
             components={{
                 Cell: props => {

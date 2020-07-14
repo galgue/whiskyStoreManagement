@@ -1,41 +1,48 @@
-import React from 'react';
-import MaterialTable, { Column, Options, MTableCell } from 'material-table';
+import React, { useState } from 'react';
+import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
+import { Typography } from '@material-ui/core';
+import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
 
 
-interface ProccessesManagementRow {
-    id: number;
-    name: string;
-    description: string;
-    duration: number;
+interface BarrelUsageRow {
+    id: string;
+    BatchesBarrelId: string;
+    usageGoal: string;
+    usageAmount: number;
+    employeeId: number;
 }
 
 interface TableState {
-    columns: Array<Column<ProccessesManagementRow>>;
-    data: ProccessesManagementRow[];
+    columns: Array<Column<BarrelUsageRow>>;
+    data: BarrelUsageRow[];
 }
 
-export const ProccessesManagementTable = () => {
+export const BarrelUsageTable = () => {
     const [state, setState] = React.useState<TableState>({
         columns: [
             {
-                title: 'מק"ט תהליך', field: 'id', type: 'numeric', removable: false,
+                title: 'מק"ט שימוש', field: 'id',removable: false,
             },
             {
-                title: 'שם תהליך', field: 'name',
+                title: 'מק"ט אצוות חבית', field: 'BatchesBarrelId',removable: false,
             },
             {
-                title: 'תיאור תהליך', field: 'description',
+                title: 'מטרת השימוש', field: 'usageGoal',removable: false,
             },
             {
-                title: 'משך', field: 'duration', type: 'numeric', removable: false,
+                title: 'כמות השימוש', field: 'usageAmount',type:'numeric',removable: false,
+            },
+            {
+                title: 'מספר עובד כותב השימוש', field: 'employeeId', type:'numeric', removable: false,
             },
         ],
         data: [
             {
-                id: 123456,
-                name: 'יוסי',
-               description:'lfksjflksajdsa',
-               duration:600
+                id: '123456',
+                BatchesBarrelId:'fsdgdsf',
+                employeeId:4343432224,
+                usageAmount:34343243,
+                usageGoal:'dfdsfdsfdssdfds'
             },
         ],
     });
@@ -54,7 +61,7 @@ export const ProccessesManagementTable = () => {
 
     return (<>
         <MaterialTable
-            title='ניהול תהליכים'
+            title='שימושי אצוות חבית'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
             components={{
                 Cell: props => {
