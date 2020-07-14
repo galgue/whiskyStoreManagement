@@ -9,11 +9,13 @@
     "lib": ["es6"],
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
   },
   "include": [
     "**.ts"
   ],
   "exclude": [
     "./frontend"
-  ]
+  ],
 }
