@@ -39,7 +39,7 @@ export const ProccessesManagementTable = () => {
             },
         ],
     });
-    const options: Options = {
+    const options: Options<any> = {
         draggable: false,
         headerStyle: {
             textAlign: 'right'

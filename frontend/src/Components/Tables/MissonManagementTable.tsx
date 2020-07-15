@@ -53,7 +53,7 @@ export const MissonManagementTable = () => {
             },
         ],
     });
-    const options: Options = {
+    const options: Options<any> = {
         draggable: false,
         headerStyle: {
             textAlign: 'right'
