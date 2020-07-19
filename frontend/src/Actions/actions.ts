@@ -1,0 +1,2 @@
+export const SET_APP_STATE = 'SET_APP_STATE';
+export const SET_LOGGED_USER = 'SET_LOGGED_USER';
