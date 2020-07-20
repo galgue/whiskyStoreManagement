@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
+import MaterialTable, { Column, Options, MTableCell, MTableEditRow, MTableToolbar, Localization } from 'material-table';
 import { Typography } from '@material-ui/core';
 import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
-
+import { ErrorMessage } from '../Dialogs/ErrorMessage';
+import { MissonDialog } from '../Dialogs/MissonDialog';
+import { CommentsDialog } from '../Dialogs/CommentsDialog';
+import { BarrelBatchesUsageDialog } from '../Dialogs/BarreBatchesUsage';
 
 export interface Row {
-    id: number;
+    id: string;
     barrelType: number;
     chainName: number;
     timeInBarrel: number;
@@ -16,6 +19,7 @@ export interface Row {
     tableData?: any;
     owner: string;
     location: string;
+    isActive?: boolean;
 }
 
 interface TableState {
@@ -25,31 +29,36 @@ interface TableState {
 
 export const BatchesTable = () => {
     const [selectedRow, setSelectedRow] = useState<Row>();
-    const [openCard, setOpenCard] = useState(false);
-    const [state, setState] = React.useState<TableState>({
+    const [openMessage, setOpenMessage] = useState(false);
+    const [openMissonCard, setOpenMissonCard] = useState(false);
+    const [openCommentsCard, setOpenCommentsCard] = useState(false);
+    const [openBarrelBatchesUsageCard, setOpenBarrelBatchesUsageCard] = useState(false);
+    const [message, setMessage] = useState('');
+    const [state, setState] = useState<TableState>({
         columns: [
             {
-                title: 'מק"ט', field: 'id', type: 'numeric', removable: false,
+                title: 'מק"ט*', field: 'id',removable: false, editable: 'never'
             },
             {
-                title: 'סוג חבית', field: 'barrelType',
+                title: 'סוג חבית*', field: 'barrelType',
                 lookup: { 1: 'אלון', 2: 'cherry' },
+                emptyValue: 'אלון'
             },
             {
-                title: 'שם שרשרת', field: 'chainName',
-
+                title: 'שם שרשרת*', field: 'chainName',
                 lookup: { 1: 'סטנדרטי', 2: 'יישון ארוך' },
+                emptyValue: 'סטנדרטי'
+            },
+            {
+                title: 'תקופת יישון', field: 'timeInBarrel', type: 'numeric', emptyValue: '0'
 
             },
             {
-                title: 'תקופת יישון', field: 'timeInBarrel', type: 'numeric',
-
-            },
-            {
-                title: 'כמות נוזל במילוי', field: 'liquidQuantity', type: 'numeric',
+                title: 'כמות נוזל במילוי*', field: 'liquidQuantity', type: 'numeric',
                 cellStyle: {
                     textAlign: 'right'
-                }
+                },
+                emptyValue: '0'
             },
             {
                 title: 'מק"ט אצוות חבית קודמת', field: 'previousId',
@@ -57,25 +66,27 @@ export const BatchesTable = () => {
                 lookup: { 111111: 111111, 222222: 222222 },
             },
             {
-                title: 'אחוז אלכוהול במילוי', field: 'alcoholPercentage', type: 'numeric',
+                title: 'אחוז אלכוהול במילוי*', field: 'alcoholPercentage', type: 'numeric', emptyValue: '0'
             },
             {
-                title: 'סוג תזקיק', field: 'distillateType',
+                title: 'סוג תזקיק*', field: 'distillateType',
 
                 lookup: { 1: 'ניו מייק סינגל מאלט', 2: 'גין לבנטיני', 3: 'סינגל מאלט קאלסי', 4: 'ליקר רוטס' },
             },
             {
-                title: 'בעלות', field: 'owner',
+                title: 'בעלות*', field: 'owner', emptyValue: 'מזקקה'
 
             },
             {
-                title: 'מיקום חבית במחסן', field: 'location',
-
+                title: 'מיקום חבית במחסן*', field: 'location',
+            },
+            {
+                title: 'האם פעילה*', field: 'isActive', type: 'boolean'
             },
         ],
         data: [
             {
-                id: 123456,
+                id: '123456',
                 barrelType: 2,
                 chainName: 2,
                 timeInBarrel: 345,
@@ -87,7 +98,7 @@ export const BatchesTable = () => {
                 distillateType: 2
             },
             {
-                id: 222222,
+                id: '222222',
                 barrelType: 1,
                 chainName: 1,
                 timeInBarrel: 123,
@@ -99,7 +110,7 @@ export const BatchesTable = () => {
                 distillateType: 1
             },
             {
-                id: 111111,
+                id: '111111',
                 barrelType: 1,
                 chainName: 1,
                 timeInBarrel: 150,
@@ -111,7 +122,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111112,
+                id: '111112',
                 barrelType: 1,
                 chainName: 2,
                 timeInBarrel: 150,
@@ -124,7 +135,7 @@ export const BatchesTable = () => {
 
 
             {
-                id: 111113,
+                id: '111113',
                 barrelType: 2,
                 chainName: 2,
                 timeInBarrel: 220,
@@ -138,7 +149,7 @@ export const BatchesTable = () => {
 
 
             {
-                id: 111114,
+                id: '111114',
                 barrelType: 2,
                 chainName: 2,
                 timeInBarrel: 300,
@@ -151,7 +162,7 @@ export const BatchesTable = () => {
 
 
             {
-                id: 111115,
+                id: '111115',
                 barrelType: 2,
                 chainName: 2,
                 timeInBarrel: 300,
@@ -163,7 +174,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111116,
+                id: '111116',
                 barrelType: 1,
                 chainName: 1,
                 timeInBarrel: 450,
@@ -176,7 +187,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111117,
+                id: '111117',
                 barrelType: 1,
                 chainName: 1,
                 timeInBarrel: 450,
@@ -188,7 +199,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111118,
+                id: '111118',
                 barrelType: 2,
                 chainName: 2,
                 timeInBarrel: 450,
@@ -200,7 +211,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111119,
+                id: '111119',
                 barrelType: 2,
                 chainName: 1,
                 timeInBarrel: 660,
@@ -212,7 +223,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111120,
+                id: '111120',
                 barrelType: 2,
                 chainName: 1,
                 timeInBarrel: 660,
@@ -224,7 +235,7 @@ export const BatchesTable = () => {
             },
 
             {
-                id: 111122,
+                id: '111122',
                 barrelType: 2,
                 chainName: 1,
                 timeInBarrel: 500,
@@ -238,27 +249,60 @@ export const BatchesTable = () => {
         ],
     });
     const options: Options = {
-        draggable:false,
+        draggable: false,
         headerStyle: {
             textAlign: 'right'
         },
-        exportButton:true,
+        exportButton: true,
         searchFieldAlignment: "left",
         rowStyle: (rowData => {
-           return {backgroundColor: (selectedRow && selectedRow.id === rowData.id) ? '#EEE' : '#FFF'}
+            return { backgroundColor: (selectedRow && selectedRow.id === rowData.id) ? '#EEE' : '#FFF' }
         })
     }
 
+    const handleMessageOpen = (isOpen: boolean) => {
+        setOpenMessage(isOpen);
+    }
+
+    const handleMissonCardOpen = (isOpen:boolean) => {
+        setOpenMissonCard(isOpen);
+    }
+
+    const handleCommentsCardOpen = (isOpen:boolean) => {
+        setOpenCommentsCard(isOpen);
+    }
+
+    const handleBarrelBatchesUsageCardOpen = (isOpen:boolean) => {
+        setOpenBarrelBatchesUsageCard(isOpen);
+    }
+
+    const localization:Localization ={
+
+    };
+
     return (<>
+        <ErrorMessage onOpen={handleMessageOpen} open={openMessage} message={message} />
         <MaterialTable
             title='אצוות חביות'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
             onRowClick={(evt, rowData) => setSelectedRow(rowData)}
             actions={[
                 {
-                    icon: () => <Typography>נתוני אצוות חבית</Typography>,
+                    icon: () => <Typography>משימות אצוות חבית</Typography>,
                     isFreeAction: true,
-                    onClick: () => setOpenCard(true),
+                    onClick: () => setOpenMissonCard(true),
+                    disabled: selectedRow === undefined
+                },
+                {
+                    icon: () => <Typography>הערות אצוות חבית</Typography>,
+                    isFreeAction: true,
+                    onClick: () => setOpenCommentsCard(true),
+                    disabled: selectedRow === undefined
+                },
+                {
+                    icon: () => <Typography>שימושי אצוות חבית</Typography>,
+                    isFreeAction: true,
+                    onClick: () => setOpenBarrelBatchesUsageCard(true),
                     disabled: selectedRow === undefined
                 }
             ]}
@@ -270,14 +314,21 @@ export const BatchesTable = () => {
                             {...props}
                         />
                     );
-                }
+                },
+                Toolbar: props => {
+                    return (
+                        <MTableToolbar exportPdf = {false}
+                            {...props}
+                        />
+                    );
+                },
             }}
             localization={{
                 toolbar: {
                     searchPlaceholder: 'חפש',
-                    exportAriaLabel:'ייצא לאקסל',
-                    exportName:'ייצא לאקסל',
-                    exportTitle:'ייצא לאקסל'
+                    exportAriaLabel: 'ייצא לאקסל',
+                    exportName: 'ייצא לאקסל',
+                    exportTitle: 'ייצא לאקסל',
                 },
                 body: {
                     addTooltip: 'הוסף',
@@ -309,27 +360,62 @@ export const BatchesTable = () => {
             options={options}
             editable={{
                 onRowAdd: (newData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
+                        if (newData.isActive === undefined) {
+                            newData.isActive = false;
+                        }
+                        const isValid = newData.id
+                            && newData.alcoholPercentage !== undefined
+                            && newData.barrelType
+                            && newData.chainName
+                            && newData.distillateType
+                            && newData.liquidQuantity !== undefined
+                            && newData.location
+                            && newData.owner
+                            && newData.timeInBarrel !== undefined
                         setTimeout(() => {
-                            resolve();
-                            setState((prevState) => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
+                            if (isValid) {
+                                resolve();
+                                setState((prevState) => {
+                                    const data = [...prevState.data];
+                                    data.push(newData);
+                                    return { ...prevState, data };
+                                });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
+                            }
                         }, 600);
                     }),
 
                 onRowUpdate: (newData, oldData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
                         setTimeout(() => {
-                            resolve();
-                            if (oldData) {
+                            const isValid = newData.id
+                                && newData.alcoholPercentage !== undefined
+                                && newData.barrelType
+                                && newData.chainName
+                                && newData.distillateType
+                                && newData.liquidQuantity !== undefined
+                                && newData.location
+                                && newData.owner
+                                && (newData.timeInBarrel.toString() !== '') 
+                            if (newData.previousId && newData.previousId.toString() === newData.id.toString()) {
+                                reject();
+                                setMessage('מק"ט אצוות החבית הקודמת זהה למק"ט אצוות החבית הנוכחית');
+                                setOpenMessage(true);
+                            } else if (oldData && isValid) {
+                                resolve();
                                 setState((prevState) => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
                                 });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
                             }
                         }, 600);
                     }),
@@ -346,7 +432,9 @@ export const BatchesTable = () => {
                     }),
             }}
         />
-        <SimpleDialogDemo open={openCard} rowData={selectedRow as Row} />
+        {selectedRow && <MissonDialog onOpen = {handleMissonCardOpen} open={openMissonCard} rowId={selectedRow.id} />}
+        {selectedRow && <CommentsDialog onOpen = {handleCommentsCardOpen} open={openCommentsCard} rowId={selectedRow.id} />}
+        {selectedRow && <BarrelBatchesUsageDialog onOpen = {handleBarrelBatchesUsageCardOpen} open={openBarrelBatchesUsageCard} rowId={selectedRow.id} />}
     </>
     );
 }

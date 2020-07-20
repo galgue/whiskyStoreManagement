@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
 import { Typography } from '@material-ui/core';
 import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
+import { ErrorMessage } from '../Dialogs/ErrorMessage';
 
 
 interface TypeManagementRow {
@@ -18,33 +19,35 @@ interface TableState {
 }
 
 export const BarrelTypeManagementTable = () => {
+    const [openMessage, setOpenMessage] = useState(false);
+    const [message, setMessage] = useState('');
     const [state, setState] = React.useState<TableState>({
         columns: [
             {
-                title: 'מק"ט סוג חבית', field: 'id', type: 'numeric', removable: false,
+                title: 'מק"ט סוג חבית*', field: 'id', type: 'numeric', removable: false, editable: 'never',
             },
             {
-                title: 'שם', field: 'name',
+                title: 'שם*', field: 'name',
             },
             {
-                title: 'נפח', field: 'capacity', type: 'numeric',
+                title: 'נפח*', field: 'capacity', type: 'numeric',
             },
             {
-                title: 'סוג', field: 'type', lookup: {
+                title: 'סוג*', field: 'type', lookup: {
                     1: 'אלון', 2: 'cherry'
                 },
             },
             {
-                title: 'כמות', field: 'quantity', type: 'numeric',
+                title: 'כמות*', field: 'quantity', type: 'numeric',
             },
         ],
         data: [
             {
                 id: 123456,
                 name: 'יוסי',
-                capacity:500,
-                type:1,
-                quantity:400
+                capacity: 500,
+                type: 1,
+                quantity: 400
             },
         ],
     });
@@ -55,13 +58,18 @@ export const BarrelTypeManagementTable = () => {
         },
         exportButton: true,
         searchFieldAlignment: "left",
-        editCellStyle:{
+        editCellStyle: {
             textAlign: 'right',
-            float:'right'
+            float: 'right'
         },
     }
 
+    const handleMessageOpen = (isOpen: boolean) => {
+        setOpenMessage(isOpen);
+    }
+
     return (<>
+        <ErrorMessage onOpen={handleMessageOpen} open={openMessage} message={message} />
         <MaterialTable
             title='ניהול סוגי חביות'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
@@ -112,27 +120,48 @@ export const BarrelTypeManagementTable = () => {
             options={options}
             editable={{
                 onRowAdd: (newData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
+                        const isValid = newData.id
+                            && newData.capacity
+                            && newData.name
+                            && newData.quantity
+                            && newData.type;
+
                         setTimeout(() => {
-                            resolve();
-                            setState((prevState) => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
+                            if (isValid) {
+                                resolve();
+                                setState((prevState) => {
+                                    const data = [...prevState.data];
+                                    data.push(newData);
+                                    return { ...prevState, data };
+                                });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
+                            }
                         }, 600);
                     }),
 
                 onRowUpdate: (newData, oldData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
+                        const isValid = newData.id
+                            && newData.capacity
+                            && newData.name
+                            && newData.quantity
+                            && newData.type;
                         setTimeout(() => {
-                            resolve();
-                            if (oldData) {
+                            if (oldData && isValid) {
+                                resolve();
                                 setState((prevState) => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
                                 });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
                             }
                         }, 600);
                     }),

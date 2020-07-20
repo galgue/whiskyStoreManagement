@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
+import MaterialTable, { Column, Options, MTableCell, MTableEditRow, MTableEditField } from 'material-table';
 import { Typography } from '@material-ui/core';
 import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
+import { ErrorMessage } from '../Dialogs/ErrorMessage';
 
 
 interface CommentsRow {
@@ -17,27 +18,29 @@ interface TableState {
 }
 
 export const CommentsTable = () => {
+    const [openMessage, setOpenMessage] = useState(false);
+    const [message, setMessage] = useState('');
     const [state, setState] = React.useState<TableState>({
         columns: [
             {
-                title: 'מק"ט הערה', field: 'id',removable: false,
+                title: 'מק"ט הערה*', field: 'id', removable: false,
             },
             {
-                title: 'מק"ט סוג חבית', field: 'BarrelTypeId',removable: false,
+                title: 'מק"ט סוג חבית*', field: 'BarrelTypeId', removable: false,
             },
             {
-                title: 'הערה', field: 'comment',removable: false,
+                title: 'הערה*', field: 'comment', removable: false,
             },
             {
-                title: 'מספר עובד כותב הערה', field: 'employeeId', type:'numeric', removable: false,
+                title: 'מספר עובד כותב הערה*', field: 'employeeId', type: 'numeric', removable: false,
             },
         ],
         data: [
             {
                 id: '123456',
-                BarrelTypeId:'ddsfddse32',
-                comment:'sdgerggedfs',
-                employeeId:13214323,
+                BarrelTypeId: 'ddsfddse32',
+                comment: 'sdgerggedfs',
+                employeeId: 13214323,
             },
         ],
     });
@@ -47,14 +50,18 @@ export const CommentsTable = () => {
             textAlign: 'right'
         },
         exportButton: true,
+        exportAllData:false,
         searchFieldAlignment: "left",
-        editCellStyle: {
-            textAlign: 'right',
-            float: 'right'
-        },
+        rowStyle: {
+            textAlign: 'right'
+        }
+    }
+    const handleMessageOpen = (isOpen: boolean) => {
+        setOpenMessage(isOpen);
     }
 
     return (<>
+        <ErrorMessage onOpen={handleMessageOpen} open={openMessage} message={message} />
         <MaterialTable
             title='הערות'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
@@ -62,7 +69,17 @@ export const CommentsTable = () => {
                 Cell: props => {
                     return (
                         <MTableCell
-                            style={{ textAlign: 'right' }}
+                            align={'right'}
+                            style={{ textAlign: 'right', alignContent: 'right' }}
+                            {...props}
+                        />
+                    );
+                },
+                EditRow: props => {
+                    return (
+                        <MTableEditRow
+                            align={'right'}
+                            style={{ textAlign: 'right', alignContent: 'right' }}
                             {...props}
                         />
                     );
@@ -105,27 +122,46 @@ export const CommentsTable = () => {
             options={options}
             editable={{
                 onRowAdd: (newData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
+                        const isValid = newData.id
+                            && newData.employeeId
+                            && newData.comment
+                            && newData.BarrelTypeId;
+
                         setTimeout(() => {
-                            resolve();
-                            setState((prevState) => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
+                            if (isValid) {
+                                resolve();
+                                setState((prevState) => {
+                                    const data = [...prevState.data];
+                                    data.push(newData);
+                                    return { ...prevState, data };
+                                });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
+                            }
                         }, 600);
                     }),
 
                 onRowUpdate: (newData, oldData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
+                        const isValid = newData.id
+                            && newData.employeeId
+                            && newData.comment
+                            && newData.BarrelTypeId;
                         setTimeout(() => {
-                            resolve();
-                            if (oldData) {
+                            if (oldData && isValid) {
+                                resolve();
                                 setState((prevState) => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
                                 });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
                             }
                         }, 600);
                     }),

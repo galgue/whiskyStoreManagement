@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MaterialTable, { Column, Options, MTableCell } from 'material-table';
+import { ErrorMessage } from '../Dialogs/ErrorMessage';
 
 
 interface UserManagementRow {
@@ -19,31 +20,33 @@ interface TableState {
 }
 
 export const UserManagementTable = () => {
-    const [state, setState] = React.useState<TableState>({
+    const [openMessage, setOpenMessage] = useState(false);
+    const [message, setMessage] = useState('');
+    const [state, setState] = useState<TableState>({
         columns: [
             {
-                title: 'מספר עובד', field: 'id', type: 'numeric', removable: false,
+                title: 'מספר עובד*', field: 'id', type: 'numeric', removable: false,
             },
             {
-                title: 'שם פרטי', field: 'firstName',
+                title: 'שם פרטי*', field: 'firstName',
             },
             {
-                title: 'שם משפחה', field: 'lastName',
+                title: 'שם משפחה*', field: 'lastName',
             },
             {
-                title: 'מחלקה', field: 'department',removable: false,
+                title: 'מחלקה*', field: 'department',removable: false,
             },
             {
-                title: 'עבודה', field: 'job',removable: false,
+                title: 'עבודה*', field: 'job',removable: false,
             },
             {
-                title: 'סיסמה', field: 'password',removable: false,
+                title: 'סיסמה*', field: 'password',removable: false,
             },
             {
-                title: 'מספר טלפון', field: 'phoneNumber',removable: false,
+                title: 'מספר טלפון*', field: 'phoneNumber',removable: false,
             },
             {
-                title: 'מייל', field: 'email',removable: false,
+                title: 'מייל*', field: 'email',removable: false,
             },
         ],
         data: [
@@ -71,8 +74,12 @@ export const UserManagementTable = () => {
             float: 'right'
         },
     }
+    const handleMessageOpen = (isOpen: boolean) => {
+        setOpenMessage(isOpen);
+    }
 
     return (<>
+     <ErrorMessage onOpen={handleMessageOpen} open={openMessage} message={message} />
         <MaterialTable
             title='ניהול שרשראות תהליכים'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
@@ -123,27 +130,53 @@ export const UserManagementTable = () => {
             options={options}
             editable={{
                 onRowAdd: (newData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve,reject) => {
+                        const isValid = newData.id 
+                        && newData.department
+                        && newData.email
+                        && newData.firstName
+                        && newData.lastName
+                        && newData.password
+                        && newData.job
+                        && newData.phoneNumber 
                         setTimeout(() => {
+                            if(isValid){
                             resolve();
                             setState((prevState) => {
                                 const data = [...prevState.data];
                                 data.push(newData);
                                 return { ...prevState, data };
                             });
+                        }else{
+                            reject();
+                            setMessage('לא מילאו את כל שדות החובה!');
+                            setOpenMessage(true);
+                        }
                         }, 600);
                     }),
 
                 onRowUpdate: (newData, oldData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve,reject) => {
+                        const isValid = newData.id 
+                        && newData.department
+                        && newData.email
+                        && newData.firstName
+                        && newData.lastName
+                        && newData.password
+                        && newData.job
+                        && newData.phoneNumber 
                         setTimeout(() => {
                             resolve();
-                            if (oldData) {
+                            if (oldData && isValid) {
                                 setState((prevState) => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
                                 });
+                            }else{
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
                             }
                         }, 600);
                     }),

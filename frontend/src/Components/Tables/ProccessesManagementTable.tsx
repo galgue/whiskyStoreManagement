@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MaterialTable, { Column, Options, MTableCell } from 'material-table';
+import { ErrorMessage } from '../Dialogs/ErrorMessage';
 
 
 interface ProccessesManagementRow {
@@ -15,27 +16,29 @@ interface TableState {
 }
 
 export const ProccessesManagementTable = () => {
-    const [state, setState] = React.useState<TableState>({
+    const [openMessage, setOpenMessage] = useState(false);
+    const [message, setMessage] = useState('');
+    const [state, setState] = useState<TableState>({
         columns: [
             {
-                title: 'מק"ט תהליך', field: 'id', type: 'numeric', removable: false,
+                title: 'מק"ט תהליך*', field: 'id', type: 'numeric', removable: false,
             },
             {
-                title: 'שם תהליך', field: 'name',
+                title: 'שם תהליך*', field: 'name',
             },
             {
-                title: 'תיאור תהליך', field: 'description',
+                title: 'תיאור תהליך*', field: 'description',
             },
             {
-                title: 'משך', field: 'duration', type: 'numeric', removable: false,
+                title: 'משך*', field: 'duration', type: 'numeric', removable: false,
             },
         ],
         data: [
             {
                 id: 123456,
                 name: 'יוסי',
-               description:'lfksjflksajdsa',
-               duration:600
+                description: 'lfksjflksajdsa',
+                duration: 600
             },
         ],
     });
@@ -51,8 +54,12 @@ export const ProccessesManagementTable = () => {
             float: 'right'
         },
     }
+    const handleMessageOpen = (isOpen: boolean) => {
+        setOpenMessage(isOpen);
+    }
 
     return (<>
+     <ErrorMessage onOpen={handleMessageOpen} open={openMessage} message={message} />
         <MaterialTable
             title='ניהול תהליכים'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
@@ -103,27 +110,46 @@ export const ProccessesManagementTable = () => {
             options={options}
             editable={{
                 onRowAdd: (newData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve, reject) => {
+                        const isValid = newData.id
+                            && newData.description
+                            && newData.duration
+                            && newData.name;
+
                         setTimeout(() => {
-                            resolve();
-                            setState((prevState) => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
+                            if (isValid) {
+                                resolve();
+                                setState((prevState) => {
+                                    const data = [...prevState.data];
+                                    data.push(newData);
+                                    return { ...prevState, data };
+                                });
+                            } else {
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
+                            }
                         }, 600);
                     }),
 
                 onRowUpdate: (newData, oldData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve,reject) => {
+                        const isValid = newData.id
+                            && newData.description
+                            && newData.duration
+                            && newData.name;
                         setTimeout(() => {
                             resolve();
-                            if (oldData) {
+                            if (oldData && isValid) {
                                 setState((prevState) => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
                                 });
+                            }else{
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
                             }
                         }, 600);
                     }),

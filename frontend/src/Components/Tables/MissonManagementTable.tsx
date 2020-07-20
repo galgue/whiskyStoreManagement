@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MaterialTable, { Column, Options, MTableCell, MTableEditRow } from 'material-table';
 import { Typography } from '@material-ui/core';
 import SimpleDialogDemo from '../Dialogs/BarrelBatchesDataDialog';
+import { ErrorMessage } from '../Dialogs/ErrorMessage';
 
 
 interface MissonManagementRow {
@@ -10,7 +11,7 @@ interface MissonManagementRow {
     description: string;
     creationDate: Date;
     reminderDate: Date;
-    isCompleted: boolean;
+    isCompleted?: boolean;
 }
 
 interface TableState {
@@ -19,24 +20,26 @@ interface TableState {
 }
 
 export const MissonManagementTable = () => {
-    const [state, setState] = React.useState<TableState>({
+    const [openMessage, setOpenMessage] = useState(false);
+    const [message, setMessage] = useState('');
+    const [state, setState] = useState<TableState>({
         columns: [
             {
-                title: 'מק"ט אצוות חבית', field: 'id', lookup: {
+                title: 'מק"ט אצוות חבית*', field: 'id', lookup: {
                     1111111: 111111, 2222222: 2222222
                 }, removable: false,
             },
             {
-                title: 'נושא משימה', field: 'missionSubject',
+                title: 'נושא משימה*', field: 'missionSubject',
             },
             {
                 title: 'תיאור משימה', field: 'description',
             },
             {
-                title: 'נוצרה בתאריך', field: 'creationDate', type: 'date',
+                title: 'נוצרה בתאריך*', field: 'creationDate', type: 'date',
             },
             {
-                title: 'תאריך תזכורת', field: 'reminderDate', type: 'date',
+                title: 'תאריך תזכורת*', field: 'reminderDate', type: 'date',
             },
             {
                 title: 'האם הושלמה', field: 'isCompleted', type: 'boolean',
@@ -46,10 +49,10 @@ export const MissonManagementTable = () => {
             {
                 id: 123456,
                 description: 'יוסי',
-                missionSubject:'fdsfsd',
+                missionSubject: 'fdsfsd',
                 creationDate: new Date(2018, 11, 24, 10, 33, 30),
-                reminderDate:  new Date(2019, 11, 24, 10, 33, 30),
-                isCompleted:false
+                reminderDate: new Date(2019, 11, 24, 10, 33, 30),
+                isCompleted: false
             },
         ],
     });
@@ -65,9 +68,13 @@ export const MissonManagementTable = () => {
             float: 'right'
         },
     }
+    const handleMessageOpen = (isOpen: boolean) => {
+        setOpenMessage(isOpen);
+    }
 
     return (<>
-        <MaterialTable
+     <ErrorMessage onOpen={handleMessageOpen} open={openMessage} message={message} />
+     <MaterialTable
             title='ניהול משימות'
             style={{ direction: 'rtl', textAlign: 'right', alignContent: 'right' }}
             components={{
@@ -117,27 +124,49 @@ export const MissonManagementTable = () => {
             options={options}
             editable={{
                 onRowAdd: (newData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve,reject) => {
+                        if(newData.isCompleted === undefined){
+                            newData.isCompleted = false;
+                        }
                         setTimeout(() => {
-                            resolve();
-                            setState((prevState) => {
-                                const data = [...prevState.data];
-                                data.push(newData);
-                                return { ...prevState, data };
-                            });
+                            const isValid = newData.id 
+                            && newData.creationDate 
+                            && newData.missionSubject
+                            && newData.reminderDate;
+
+                            if (isValid) {
+                                resolve();
+                                setState((prevState) => {
+                                    const data = [...prevState.data];
+                                    data.push(newData);
+                                    return { ...prevState, data };
+                                });
+                            }else{
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
+                            }
                         }, 600);
                     }),
 
                 onRowUpdate: (newData, oldData) =>
-                    new Promise((resolve) => {
+                    new Promise((resolve,reject) => {
                         setTimeout(() => {
-                            resolve();
-                            if (oldData) {
+                            const isValid = newData.id 
+                            && newData.creationDate 
+                            && newData.missionSubject
+                            && newData.reminderDate;
+                            if (oldData && isValid) {
+                                resolve();
                                 setState((prevState) => {
                                     const data = [...prevState.data];
                                     data[data.indexOf(oldData)] = newData;
                                     return { ...prevState, data };
                                 });
+                            }else{
+                                reject();
+                                setMessage('לא מילאו את כל שדות החובה!');
+                                setOpenMessage(true);
                             }
                         }, 600);
                     }),
