@@ -248,8 +248,13 @@ export const BatchesTable = () => {
 
         ],
     });
+<<<<<<< HEAD
     const options: Options = {
         draggable: false,
+=======
+    const options: Options<any> = {
+        draggable:false,
+>>>>>>> ef74c809ae1f951a67e8a2c412e4b7b8671ab449
         headerStyle: {
             textAlign: 'right'
         },
