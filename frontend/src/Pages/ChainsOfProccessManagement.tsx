@@ -1,6 +1,6 @@
 import React from 'react';
-import { BatchesTable } from '../Components/Tables/BatchesBarrelsTable';
-import { ChainOfProccessesTable } from '../Components/Tables/ChainOfProccessesTable';
+import { BatchesTable } from '../Components/Tables/BerralBatch/BatchesBarrelsTable';
+import { ChainOfProccessesTable } from '../Components/Tables/prossesChain/ChainOfProccessesTable';
 
 export const ChainsOfproccessManagementPage = () => {
     return <>

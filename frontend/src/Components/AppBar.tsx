@@ -13,16 +13,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { Link, useLocation } from 'react-router-dom';
 import { Button} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { LOGIN_ROUTE, BATCHES_BARRELS_TYPE_ROUTE, PROCCESS_MANAGEMENT_ROUTE, CHAIN_OF_PROCCESS_MANAGEMENT_ROUTE, USER_MANAGEMENT_ROUTE, BATCHES_BARRELS_ROUTE, MISSON_MANAGEMENT_ROUTE, COMMENTS_ROUTE, BARREL_USAGE_ROUTE } from '../Components/Routes';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { BatchesTable } from './Tables/BatchesBarrelsTable';
+import { BatchesTable } from './Tables/BerralBatch/BatchesBarrelsTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedUser } from '../Actions/actionsCreator';
 import {state} from '../interFaces';
@@ -141,7 +138,7 @@ export const WebsiteBar = () =>{
     let history = useHistory();
 
     const handleLogOut = () =>{
-        history.replace(LOGIN_ROUTE);
+        history.push(LOGIN_ROUTE);
         dispatch(setLoggedUser(0));
     }
 
@@ -155,7 +152,7 @@ export const WebsiteBar = () =>{
 console.log(loggedUser)
     return<>
             <CssBaseline />
-           {loggedUser && <AppBar
+           {!loggedUser && <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
@@ -182,7 +179,7 @@ console.log(loggedUser)
           </Button>
                 </Toolbar>
             </AppBar>}
-            {loggedUser && <Drawer
+            {!loggedUser && <Drawer
                 className={classes.drawer}
                 variant="persistent"
                 anchor="right"

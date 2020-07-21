@@ -30,7 +30,7 @@ export const Routes = () => {
         if (route === LOGIN_ROUTE) {
             return !loggedUser ? Component : <Redirect to={BATCHES_BARRELS_ROUTE} />
         }
-        return loggedUser ? Component : <Redirect to={LOGIN_ROUTE} />
+        return !loggedUser ? Component : <Redirect to={LOGIN_ROUTE} />
     }
 
     return <>

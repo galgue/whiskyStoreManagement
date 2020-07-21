@@ -1,10 +1,11 @@
+import { PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './User';
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn} from 'typeorm';
 import { BerralBatch } from './BerralBatch';
 
 @Entity('Notes')
 export class Note {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()

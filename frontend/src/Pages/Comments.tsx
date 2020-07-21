@@ -1,7 +1,7 @@
 import React from 'react';
-import { BarrelTypeManagementTable } from '../Components/Tables/BarrelTypeManagementTable';
-import { MissonManagementTable } from '../Components/Tables/MissonManagementTable';
-import { CommentsTable } from '../Components/Tables/Comments';
+import { BarrelTypeManagementTable } from '../Components/Tables/BerralType/BarrelTypeManagementTable';
+import { MissonManagementTable } from '../Components/Tables/Mission/MissonManagementTable';
+import { CommentsTable } from '../Components/Tables/Note/Comments';
 
 export const CommentsPage = () => {
     return <>

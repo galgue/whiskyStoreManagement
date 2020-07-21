@@ -35,6 +35,14 @@ export class Server {
         this.app.use(bodyParser.json());
         this.app.use(cookieParser());
 
+        app.use((req, res, next) => {
+            res.append('Access-Control-Allow-Origin', req.headers.origin);
+            res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.append('Access-Control-Allow-Headers', 'Content-Type');
+            res.append('Access-Control-Allow-Credentials', 'true');
+            next();
+        });
+
         this.app.get("/api", (req: Request, res: Response): void => {
             res.send("You have reached the API!");
         });

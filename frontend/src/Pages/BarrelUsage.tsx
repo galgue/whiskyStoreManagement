@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarrelUsageTable } from '../Components/Tables/BarrelUsage';
+import { BarrelUsageTable } from '../Components/Tables/Uses/BarrelUsage';
 
 export const BarrelUsagePage = () => {
     return <>

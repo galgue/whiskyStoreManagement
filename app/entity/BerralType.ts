@@ -1,7 +1,8 @@
-import {Entity, Column, PrimaryColumn} from 'typeorm';
+import { PrimaryGeneratedColumn } from 'typeorm';
+import {Entity, Column} from 'typeorm';
 @Entity('BerralTypes')
 export class BerralType {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()

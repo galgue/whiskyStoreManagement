@@ -4,7 +4,11 @@ import { Express } from 'express';
 
 export const ProssesRoute: EntityRoute = {
     router: () => RouteFactory.createRoute(Prosses, {
-        relations: ["berralType"]
+        relations: ["berralType"],
+        deletePointerEntities: (entity) => {
+            delete entity.berralType;
+            return entity
+        }
     }),
     uri: '/prosses',
 }

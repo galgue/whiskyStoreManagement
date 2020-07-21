@@ -1,6 +1,6 @@
 import React from 'react';
-import { BarrelTypeManagementTable } from '../Components/Tables/BarrelTypeManagementTable';
-import { MissonManagementTable } from '../Components/Tables/MissonManagementTable';
+import { BarrelTypeManagementTable } from '../Components/Tables/BerralType/BarrelTypeManagementTable';
+import { MissonManagementTable } from '../Components/Tables/Mission/MissonManagementTable';
 
 export const MissonManagementPage = () => {
     return <>

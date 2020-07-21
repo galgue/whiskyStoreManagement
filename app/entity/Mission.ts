@@ -1,11 +1,11 @@
+import { PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './User';
-import { ProssesChain } from './ProssesChain';
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn} from 'typeorm';
 import { BerralBatch } from './BerralBatch';
 
 @Entity('Missions')
 export class Mission {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()

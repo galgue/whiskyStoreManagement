@@ -1,6 +1,6 @@
 import React from 'react';
-import { BatchesTable } from '../Components/Tables/BatchesBarrelsTable';
-import { ProccessesManagementTable } from '../Components/Tables/ProccessesManagementTable';
+import { BatchesTable } from '../Components/Tables/BerralBatch/BatchesBarrelsTable';
+import { ProccessesManagementTable } from '../Components/Tables/Prosses/ProccessesManagementTable';
 
 export const ProccessManagementPage = () => {
     return <>

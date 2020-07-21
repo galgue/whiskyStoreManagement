@@ -1,3 +1,4 @@
+import { PrimaryGeneratedColumn } from 'typeorm';
 import { Mission } from './Mission';
 import { MissionsRoute } from './../routes/Missions.routes';
 import { ProssesChain } from './ProssesChain';
@@ -8,7 +9,7 @@ import { Use } from './Uses';
 
 @Entity('BerralBatchs')
 export class BerralBatch {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
@@ -35,6 +36,9 @@ export class BerralBatch {
     lastBerralBatchId: number;
 
     @Column()
+    alcoholPercentage: number;
+
+    @Column()
     spiritType: string;
 
     @Column()
@@ -43,7 +47,7 @@ export class BerralBatch {
     @Column()
     locationatWarehouse: string;
 
-    @Column()
+    @Column({default: true})
     isActive: boolean;
 
     @OneToMany(type => Mission, mission => mission.berralBatch)

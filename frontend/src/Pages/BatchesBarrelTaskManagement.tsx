@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BatchesTable } from '../Components/Tables/BatchesBarrelsTable';
+import { BatchesTable } from '../Components/Tables/BerralBatch/BatchesBarrelsTable';
 
 export const BatchesBarrelTaskManagement = () => {
     return <>

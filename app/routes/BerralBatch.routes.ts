@@ -14,7 +14,15 @@ export const BerralBatchsRoute: EntityRoute = {
             "missions",
             "notes",
             "uses",
-        ]
+        ],
+        deletePointerEntities: (entity) => {
+            delete entity.berralType;
+            delete entity.prossesChain;
+            delete entity.missions;
+            delete entity.notes;
+            delete entity.uses;
+            return entity
+        }
     }),
     uri: '/berral-batch',
 }

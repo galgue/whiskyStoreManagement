@@ -1,9 +1,10 @@
+import { PrimaryGeneratedColumn, AfterLoad } from 'typeorm';
 import { Prosses } from './Prosses';
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn} from 'typeorm';
 
 @Entity('ProssesChains')
 export class ProssesChain {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
@@ -39,5 +40,12 @@ export class ProssesChain {
     @ManyToOne(() => Prosses, prosses => prosses.id)
     @JoinColumn({ name: "prossesId4", referencedColumnName: 'id'})
     prosses4: Prosses;
+
+    numberOfProsseses: number;
+    
+    @AfterLoad()
+    getNumberOfProsseses() {
+        this.numberOfProsseses = this.prosses4 ? 4 : this.prosses3 ? 3 : this.prosses2 ? 2 : 1;
+    }
 
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { BatchesTable } from '../Components/Tables/BatchesBarrelsTable';
-import { BarrelTypeManagementTable } from '../Components/Tables/BarrelTypeManagementTable';
+import { BatchesTable } from '../Components/Tables/BerralBatch/BatchesBarrelsTable';
+import { BarrelTypeManagementTable } from '../Components/Tables/BerralType/BarrelTypeManagementTable';
 
 export const BarrelTypeManagementPage = () => {
     return <>

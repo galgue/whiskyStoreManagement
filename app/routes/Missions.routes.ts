@@ -14,7 +14,13 @@ export const MissionsRoute: EntityRoute = {
             "berralBatch.prossesChain.prosses2",
             "berralBatch.prossesChain.prosses3",
             "berralBatch.prossesChain.prosses4",
-        ]
+        ],
+        deletePointerEntities: (entity) => {
+            delete entity.berralBatch;
+            delete entity.creator;
+            delete entity.executeBy;
+            return entity
+        }
     }),
     uri: '/mission',
 }
