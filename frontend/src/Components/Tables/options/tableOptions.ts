@@ -10,4 +10,5 @@ export const tableOptions: Options<any> = {
         textAlign: 'right',
         float:'right'
     },
+    filtering: true
 }

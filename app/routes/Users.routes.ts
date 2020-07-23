@@ -1,14 +1,16 @@
-import { EntityRoute } from './Route';
+import { EntityRoute } from './RouteFactory';
 import { User } from '../entity/User';
 import { Request, Response, Router } from 'express';
 import { getConnection } from "typeorm";
-import { sign } from 'jsonwebtoken';
-import { auth } from './middleware/auth.middleware';
+import { sign, verify } from 'jsonwebtoken';
+import { auth, authManager } from './middleware/auth.middleware';
 
 const GET_ALL_URI = '/get';
 const GET_URI = '/get/:id';
-const SIGNUP_URI = '/signup';
+const SIGNUP_URI = '/add';
 const LOGIN_URI = '/login';
+const IS_LOGGED_URI = '/islogged';
+const LOGOUT_URI = '/logout';
 
 export const UsersRoute: EntityRoute = {
 
@@ -18,20 +20,20 @@ export const UsersRoute: EntityRoute = {
 
         let router = Router();
 
-        router.get(GET_ALL_URI, (_: Request, res: Response): void => {
+        router.get(GET_ALL_URI, authManager, (_: Request, res: Response): void => {
             getConnection().manager.find(User).then(users => {
                 res.send(users);
             })
         });
 
-        router.get(GET_URI, (req: Request, res: Response): void => {
+        router.get(GET_URI, authManager, (req: Request, res: Response): void => {
             getConnection().manager.findOne(User, req.param('id')).then(user => {
                 res.send(user);
             })
         });
 
-        router.post(SIGNUP_URI, (req: Request, res: Response): void => {
-            let newUser: User = req.body.user as User;
+        router.post(SIGNUP_URI,  authManager, (req: Request, res: Response): void => {
+            let newUser: User = req.body.entity as User;
 
             if (newUser.password.length !== 0){
                 newUser.password = sign(newUser.password, 'drinkme');
@@ -47,9 +49,30 @@ export const UsersRoute: EntityRoute = {
             })
         });
 
+        router.post('/update', authManager, function (req, res, next) {
+            let editUser: User = req.body.entity as User;
+
+            if (editUser.password?.length !== 0){
+                editUser.password = sign(editUser.password, 'drinkme');
+            }
+
+            getConnection().manager.save(User, editUser)
+            .then(result => {
+                res.send(result);
+            }).catch(err => {
+                next(err);
+            })
+        });
+
+        const getUser = (userEmail: string) => {
+            return getConnection().manager.findOne(User, {where: {email: userEmail}}).then(user => {
+                return {userName: `${user.firstName} ${user.lastName}`, isManager: user.isManager}
+            })
+        }
+
         router.post(LOGIN_URI, (req: Request, res: Response): void => {
-            let email: String = req.body.email;
-            let password: String = req.body.password;
+            let email: string = req.body.email;
+            let password: string = req.body.password;
             
             if (password.length !== 0){
                 password = sign(password, 'drinkme');
@@ -64,13 +87,49 @@ export const UsersRoute: EntityRoute = {
                         'session',sign({email, password}, 'drinkme'), 
                         { maxAge: 900000, httpOnly: true }
                         );
-                    res.send(true);
+                    getUser(email).then(userInfo => {
+                        res.send(userInfo);
+                    })
+                 } else {
+                    res.send(undefined);
                  }
-                 res.send(false);
              })
              .catch(() => {
-                res.send(false);
+                res.send(undefined);
              })
+        });
+
+        router.post(IS_LOGGED_URI, (req: Request, res: Response): void => {
+            try {
+                if(req.cookies?.session) {
+                    const {email, password}:{email: string, password: string}  = 
+                        verify(req.cookies?.session, 'drinkme') as {email: string, password: string};
+                    getConnection().manager.count(User, { where: { 
+                        "email": email,
+                        "password": password,
+                        } }).then(numberOfUsers => {
+                            if(!!numberOfUsers){
+                                getUser(email).then(userInfo => {
+                                    res.send(userInfo);
+                               })
+                            } else {
+                                res.send(undefined);
+                            }
+                        })
+                        .catch(() => {
+                        res.send(undefined);
+                        })
+                } else {
+                    res.send(undefined);
+                }
+            } catch {
+                res.send(undefined);
+            }
+        });
+
+        router.post(LOGOUT_URI, (req: Request, res: Response): void => {
+            res.clearCookie('session');
+            res.sendStatus(200);
         });
 
         return router;

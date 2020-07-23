@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 import { Mission } from './Mission';
 import { MissionsRoute } from './../routes/Missions.routes';
 import { ProssesChain } from './ProssesChain';
@@ -58,5 +58,8 @@ export class BerralBatch {
 
     @OneToMany(type => Use, use => use.berralBatch)
     uses: Use[];
+
+    @CreateDateColumn({type: "timestamp"})
+    createdAt: Date;
     
 }

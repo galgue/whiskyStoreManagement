@@ -10,12 +10,12 @@ export const tableColumns: Array<Column<BerralBatch>> = [
         title: 'מק"ט', field: 'id', type: 'numeric', removable: false, editable: 'never'
     },
     {
-        title: 'סוג חבית', field: 'berralTypeId',removable: false, 
+        title: 'סוג חבית', field: 'berralType.name',removable: false, 
         editComponent: (props) => 
             SelectEdit(() => BerralTypeController.getAll()
             .then(berralTypes => berralTypes.data.map(berralType => ({
                 key: berralType.id,
-                value: `${berralType.id}: ${berralType.name}`
+                value: `${berralType.name}`
             }))), 
             props.rowData.berralTypeId, 
             (newBerralTypeId) => props.onRowDataChange({
@@ -55,7 +55,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
             props.rowData.lastBerralBatchId || 0, 
             (newBerralBatchId) => props.onRowDataChange({
                 ...props.rowData,
-                lastBerralBatchId: newBerralBatchId,
+                lastBerralBatchId: newBerralBatchId || null,
             })),
     },
     {

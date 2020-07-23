@@ -1,4 +1,4 @@
-import { EntityRoute, RouteFactory } from './Route';
+import { EntityRoute, RouteFactory } from './RouteFactory';
 import { Express } from 'express';
 import { Note } from '../entity/Notes';
 

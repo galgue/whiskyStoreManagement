@@ -10,3 +10,11 @@ export interface Use {
     creatorId: number;
     creator: User;
 }
+
+export const isValid = (entity: Use) => {
+    return !!(entity.id &&
+        entity.berralBatchId &&
+        entity.purpose &&
+        entity.quantity && 
+        entity.creatorId);
+}

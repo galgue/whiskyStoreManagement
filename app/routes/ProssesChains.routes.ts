@@ -1,4 +1,4 @@
-import { EntityRoute, RouteFactory } from './Route';
+import { EntityRoute, RouteFactory } from './RouteFactory';
 import { ProssesChain } from '../entity/ProssesChain';
 
 export const ProssesChainRoute: EntityRoute = {

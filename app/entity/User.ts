@@ -14,12 +14,12 @@ export class User {
     department: string;
 
     @Column()
-    role: string;
+    isManager: boolean;
 
     @Column()
     phone: string;
 
-    @Column()
+    @Column({ select: false })
     password: string;
 
     @Column({ unique: true })

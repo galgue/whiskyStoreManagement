@@ -1,4 +1,4 @@
-import { EntityRoute, RouteFactory } from './Route';
+import { EntityRoute, RouteFactory } from './RouteFactory';
 import { BerralType } from '../entity/BerralType';
 import { Express } from 'express';
 

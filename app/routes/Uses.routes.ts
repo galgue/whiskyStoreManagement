@@ -1,4 +1,4 @@
-import { EntityRoute, RouteFactory } from './Route';
+import { EntityRoute, RouteFactory } from './RouteFactory';
 import { Express, Request, Response } from 'express';
 import { getConnection } from "typeorm";
 import { Use } from '../entity/Uses';

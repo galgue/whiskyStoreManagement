@@ -3,7 +3,12 @@ export interface User {
     firstName: string;
     lastName: string;
     department: string;
-    role: string;
+    isManager: boolean;
     phone: string;
     email: string;
+    password: string;
+}
+
+export const isValid = ({id, firstName, lastName, department, isManager, phone, email}: User) => {
+    return !!(id && firstName && lastName && department && isManager && phone && email);
 }

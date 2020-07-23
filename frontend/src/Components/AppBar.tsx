@@ -21,8 +21,9 @@ import { LOGIN_ROUTE, BATCHES_BARRELS_TYPE_ROUTE, PROCCESS_MANAGEMENT_ROUTE, CHA
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { BatchesTable } from './Tables/BerralBatch/BatchesBarrelsTable';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoggedUser } from '../Actions/actionsCreator';
-import {state} from '../interFaces';
+import { setLoggedUser, loggoutUser } from '../Actions/actionsCreator';
+import {stateProps} from '../interfaces';
+import { UserController } from '../controllers/users.controller';
 
 
 const drawerWidth = 240;
@@ -133,13 +134,15 @@ export const WebsiteBar = () =>{
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useDispatch();
-    const {loggedUser} = useSelector((state:state)=>state.appState);
+    const {loggedUser} = useSelector((state:stateProps)=>state.appState);
     const [open, setOpen] = useState(false);
     let history = useHistory();
 
     const handleLogOut = () =>{
-        history.push(LOGIN_ROUTE);
-        dispatch(setLoggedUser(0));
+        UserController.logut().then(() => {
+            history.push(LOGIN_ROUTE);
+            dispatch(loggoutUser());
+        })
     }
 
     const handleDrawerOpen = () => {
@@ -149,10 +152,10 @@ export const WebsiteBar = () =>{
     const handleDrawerClose = () => {
         setOpen(false);
     };
-console.log(loggedUser)
+
     return<>
             <CssBaseline />
-           {!loggedUser && <AppBar
+           {loggedUser && <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
                     [classes.appBarShift]: open,
@@ -179,7 +182,7 @@ console.log(loggedUser)
           </Button>
                 </Toolbar>
             </AppBar>}
-            {!loggedUser && <Drawer
+            {loggedUser && <Drawer
                 className={classes.drawer}
                 variant="persistent"
                 anchor="right"

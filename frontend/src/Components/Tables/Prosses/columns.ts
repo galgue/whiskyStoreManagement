@@ -17,12 +17,12 @@ export const tableColumns: Array<Column<Prosses>> = [
         title: 'משך', field: 'duration', type: 'numeric', removable: false,
     },
     {
-        title: 'סוג חבית', field: 'berralTypeId',removable: false, 
+        title: 'סוג חבית', field: 'berralType.name',removable: false, 
         editComponent: (props) => 
         SelectEdit(() => BerralTypeController.getAll()
             .then(berralTypes => berralTypes.data.map(berralType => ({
                 key: berralType.id,
-                value: `${berralType.id}: ${berralType.name}`
+                value: `${berralType.name}`
             }))), 
             props.rowData.berralTypeId, 
             (newBerralTypeId) => props.onRowDataChange({

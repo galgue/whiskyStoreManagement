@@ -16,3 +16,14 @@ export interface Mission {
     executeBy: User;
     isCompleted: boolean;
 }
+
+export const isValid = (entity: Mission) => {
+    return !!(entity.id &&
+        entity.berralBatchId &&
+        entity.topic &&
+        entity.description &&
+        entity.reminderDate &&
+        entity.creatorId &&
+        entity.executeById &&
+        entity.isCompleted)
+}

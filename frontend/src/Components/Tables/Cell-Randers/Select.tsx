@@ -28,6 +28,7 @@ export function SelectEdit(
                 value={selected}
                 onChange={e => onChange(e.target.value as number)}
             >
+                <MenuItem key={0} value={undefined}>בחר</MenuItem>
                 {selections.map((selection, key) => (
                     <MenuItem key={key} value={selection.key}>
                         {selection.value}

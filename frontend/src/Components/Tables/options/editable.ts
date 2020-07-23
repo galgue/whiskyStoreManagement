@@ -4,32 +4,46 @@ import { CommonController } from './../../../controllers/commonController';
 export function editable<T> (
         controller: CommonController<T>, 
         callback: () => Promise<void>, 
-        failed: () => void,
+        onError: (errorMessage: string) => void,
+        isValid: (entity: T) => boolean,
         {isRowAdd = true, isRowEdit = true, isRowDelete = true}: {isRowAdd?: boolean, isRowEdit?: boolean, isRowDelete?: boolean}
             ){
             return {
                 onRowAdd: isRowAdd ? (newData: T) =>
-                new Promise<void>((resolve) => {
+                new Promise<void>((resolve, reject) => {
                     setTimeout(() => {
-                        controller.addNew(newData).then(() => {
-                            callback().then(() => resolve());
-                        }).catch(err => {
-                            resolve();
-                            failed();
-                        })
+                        if(isValid(newData)) {
+                            controller.addNew(newData).then(() => {
+                                callback().then(() => resolve());
+                            }).catch(err => {
+                                reject();
+                                onError('התרחשה תקלה בשמירת המידע');
+                            })
+                        } else {
+                            reject();
+                            onError('לא מולאו את כל שדות החובה!');
+                        }
                     }, 600);
                 }) : undefined,
 
                 onRowUpdate: isRowEdit ? (newData: T, oldData: T | undefined) =>
-                    new Promise<void>((resolve) => {
+                    new Promise<void>((resolve, reject) => {
                         setTimeout(() => {
                             if (oldData) {
-                                controller.update(newData).then(() => {
-                                    callback().then(() => resolve());
-                                }).catch(err => {
-                                    resolve();
-                                    failed();
-                                })
+                                if(isValid(newData)){
+                                    controller.update(newData).then(() => {
+                                        callback().then(() => resolve());
+                                    }).catch(err => {
+                                        resolve();
+                                        onError('התרחשה תקלה בשמירת המידע');
+                                    })
+                                } else {
+                                    reject();
+                                    onError('לא מולאו את כל שדות החובה!');
+                                }
+                            } else {
+                                reject();
+                                onError('לא קיימת עמודה ישנה');
                             }
                         }, 600);
                     }): undefined,
@@ -41,7 +55,7 @@ export function editable<T> (
                                 callback().then(() => resolve());
                             }).catch(err => {
                                 resolve();
-                                failed();
+                                onError('התרחשה תקלה במחיקת שדרה')
                             })
                         }, 600);
                     }) : undefined,

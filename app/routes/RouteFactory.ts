@@ -1,11 +1,12 @@
 import { Express, Router } from "express";
 import { getConnection, ObjectType } from "typeorm";
-import { Request, Response } from 'express';
-import { auth } from './middleware/auth.middleware';
+import { Request, Response, NextFunction } from 'express';
+import { auth, authManager } from './middleware/auth.middleware';
 
 interface optionsProps<T> {
     relations?: string[],
     isAuthNeeded?: boolean,
+    isManagerAuthNeeded?: boolean,
     deletePointerEntities?: (entity: T) => T,
 }
 
@@ -21,13 +22,22 @@ export let RouteFactory  = {
         options: optionsProps<T> = {
             relations: [], 
             isAuthNeeded: false, 
+            isManagerAuthNeeded: false,
             deletePointerEntities: (entity: T) => entity},
         ): Router {
-        let {relations, isAuthNeeded} = options;    
+        let {relations, isAuthNeeded, isManagerAuthNeeded, deletePointerEntities} = options;    
         let router = Router();
 
-        if(isAuthNeeded) {
+        let managerAuth = (req: Request, res: Response, next: NextFunction) => { next() };
+
+        if(isAuthNeeded){
             router.use(auth);
+        }
+
+
+
+        if(isManagerAuthNeeded) {
+            managerAuth = authManager;
         }
 
         router.get('/', function(_,res) {
@@ -54,7 +64,7 @@ export let RouteFactory  = {
             })
         });
 
-        router.post('/delete', function (req, res, next) {
+        router.post('/delete', managerAuth, function (req, res, next) {
             getConnection().manager.delete(objectType, req.body.entity.id)
             .then(result => {
                 res.send(result);
@@ -63,8 +73,8 @@ export let RouteFactory  = {
             })
         });
 
-        router.post('/add', function (req, res, next) {
-            getConnection().manager.save(objectType, options.deletePointerEntities(req.body.entity))
+        router.post('/add', managerAuth, function (req, res, next) {
+            getConnection().manager.save(objectType, deletePointerEntities(req.body.entity))
             .then(result => {
                 res.send(result);
             }).catch(err => {
@@ -72,15 +82,14 @@ export let RouteFactory  = {
             })
         });
 
-        router.post('/update', function (req, res, next) {
-            getConnection().manager.save(objectType, options.deletePointerEntities(req.body.entity))
+        router.post('/update', managerAuth, function (req, res, next) {
+            getConnection().manager.save(objectType, deletePointerEntities(req.body.entity))
             .then(result => {
                 res.send(result);
             }).catch(err => {
                 next(err);
             })
         });
-
 
         return router;
     },

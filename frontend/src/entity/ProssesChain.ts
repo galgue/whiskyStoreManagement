@@ -14,3 +14,13 @@ export interface ProssesChain {
     prosses4: Prosses;
     numberOfProsseses: number;
 }
+
+export const isValid = (entity: ProssesChain) => {
+    return !!(entity.id &&
+        entity.name &&
+        entity.description &&
+        entity.prossesId1 && 
+        entity.prossesId2 && 
+        entity.prossesId3 && 
+        entity.prossesId4);
+}

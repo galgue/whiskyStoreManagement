@@ -1,8 +1,8 @@
 
 export interface appState {
-    loggedUser:number;
+    loggedUser:{userName: String, isManager: Boolean} | undefined;
 }
 
-export interface state {
+export interface stateProps {
    appState:appState;
 }

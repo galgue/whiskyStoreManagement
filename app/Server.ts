@@ -1,5 +1,5 @@
 import bodyParser from 'body-parser';
-import { EntityRoute } from './routes/Route';
+import { EntityRoute } from './routes/RouteFactory';
 import {Express, Request, Response} from "express";
 import express from "express";
 import * as path from "path";

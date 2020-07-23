@@ -9,3 +9,10 @@ export interface Note {
     creatorId: number;
     creator: User;
 }
+
+export const isValid = (entity: Note) => {
+    return !!(entity.id &&
+        entity.berralBatchId &&
+        entity.content &&
+        entity.creatorId) 
+}

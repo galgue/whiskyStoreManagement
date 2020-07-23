@@ -15,7 +15,7 @@ export const tableColumns: Array<Column<User>> = [
         title: 'מחלקה', field: 'department',removable: false,
     },
     {
-        title: 'תפקיד', field: 'role',removable: false,
+        title: 'האם מנהל', field: 'isManager',removable: false, type: 'boolean'
     },
     {
         title: 'מספר טלפון', field: 'phone',removable: false,
@@ -23,4 +23,7 @@ export const tableColumns: Array<Column<User>> = [
     {
         title: 'מייל', field: 'email',removable: false,
     },
+    {
+        title: 'סיסמא', field: 'password',removable: false,
+    }
 ]

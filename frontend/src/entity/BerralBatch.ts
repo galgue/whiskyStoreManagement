@@ -12,7 +12,7 @@ export interface BerralBatch {
     prossesChain: ProssesChain;
     agingDuration: number;
     quantityAtFill: number;
-    lastBerralBatchId?: number;
+    lastBerralBatchId?: number | null;
     alcoholPercentage: number;
     spiritType: string;
     ownership: string;
@@ -21,4 +21,18 @@ export interface BerralBatch {
     missions?: Mission[];
     notes?: Note[];
     uses?: Use[];
+}
+
+export const isValid = (entity: BerralBatch) => {
+    return !!(entity.id &&
+        entity.berralTypeId &&
+        entity.berralType &&
+        entity.prossesChainId &&
+        entity.prossesChain &&
+        entity.agingDuration &&
+        entity.quantityAtFill &&
+        entity.alcoholPercentage &&
+        entity.spiritType &&
+        entity.ownership &&
+        entity.locationatWarehouse)
 }
