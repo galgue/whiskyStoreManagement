@@ -3,8 +3,40 @@ import { EntityRoute } from './routes/RouteFactory';
 import {Express, Request, Response} from "express";
 import express from "express";
 import * as path from "path";
-import {createConnection} from "typeorm";
+import {createConnection, ConnectionOptions} from "typeorm";
 import cookieParser from 'cookie-parser';
+
+const localServerOptions: ConnectionOptions = {
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "drinkMe123",
+    "database": "whisky",
+    "synchronize": true,
+    "logging": true,
+    insecureAuth : true,
+    "connectTimeout": 10000,
+    "entities": [
+        __dirname + "\\entity\\*.ts"
+    ],
+}
+
+const freeSqlOnlineServerOptions: ConnectionOptions = {
+    "type": "mysql",
+    "host": "sql2.freemysqlhosting.net",
+    "port": 3306,
+    "username": "sql2356940",
+    "password": "wS3!eX7*",
+    "database": "sql2356940",
+    "synchronize": true,
+    "logging": true,
+    insecureAuth : true,
+    "connectTimeout": 10000,
+    "entities": [
+        __dirname + "\\entity\\*.ts"
+    ],
+}
 
 export class Server {
 
@@ -13,21 +45,7 @@ export class Server {
     constructor(app: Express, routes: EntityRoute[]) {
         this.app = app;
 
-        createConnection({
-            "type": "mysql",
-            "host": "localhost",
-            "port": 3306,
-            "username": "root",
-            "password": "drinkMe123",
-            "database": "whisky",
-            "synchronize": true,
-            "logging": true,
-            insecureAuth : true,
-            "connectTimeout": 10000,
-            "entities": [
-                __dirname + "\\entity\\*.ts"
-            ],
-        })
+        createConnection(freeSqlOnlineServerOptions);
 
         this.app.use(express.static(path.resolve("./") + "/build/frontend"));
 

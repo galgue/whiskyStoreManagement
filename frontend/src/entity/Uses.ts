@@ -12,7 +12,7 @@ export interface Use {
 }
 
 export const isValid = (entity: Use) => {
-    return !!(entity.id &&
+    return !!(
         entity.berralBatchId &&
         entity.purpose &&
         entity.quantity && 

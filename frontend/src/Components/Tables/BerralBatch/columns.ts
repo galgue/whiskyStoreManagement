@@ -47,8 +47,11 @@ export const tableColumns: Array<Column<BerralBatch>> = [
     {
         title: 'מק"ט אצוות חבית קודמת', field: 'lastBerralBatchId',removable: false, 
         editComponent: (props) => 
-            SelectEdit(() => BerralBatchController.getAll()
-            .then(berralbatchs => berralbatchs.data.map(berralbatch => ({
+            SelectEdit(() => BerralBatchController.getAllActive(
+                props.rowData.id || -1,
+                props.rowData.lastBerralBatchId || -1
+                )
+            .then(berralbatchs => berralbatchs.map(berralbatch => ({
                 key: berralbatch.id,
                 value: `${berralbatch.id}`
             }))), 
@@ -71,4 +74,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
     {
         title: 'מיקום חבית במחסן', field: 'locationatWarehouse',
     },
+    {
+        title: 'פעילה', field: 'isActive', type: 'boolean', editable: 'never'
+    }
 ]

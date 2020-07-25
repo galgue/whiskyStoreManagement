@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { getConnection } from 'typeorm';
+import { PrimaryGeneratedColumn, CreateDateColumn, AfterLoad } from 'typeorm';
 import { Mission } from './Mission';
 import { MissionsRoute } from './../routes/Missions.routes';
 import { ProssesChain } from './ProssesChain';
@@ -47,8 +48,19 @@ export class BerralBatch {
     @Column()
     locationatWarehouse: string;
 
-    @Column({default: true})
     isActive: boolean;
+
+    @AfterLoad()
+    async getIsActive() {
+         await getConnection().manager.count(BerralBatch, { where: { 
+            "lastBerralBatchId": this.id,
+         } }).then(numberOfLast => {
+            this.isActive = !numberOfLast;
+         })
+         .catch(() => {
+            this.isActive = true;
+         });
+    }
 
     @OneToMany(type => Mission, mission => mission.berralBatch)
     missions: Mission[];
@@ -59,7 +71,7 @@ export class BerralBatch {
     @OneToMany(type => Use, use => use.berralBatch)
     uses: Use[];
 
-    @CreateDateColumn({type: "timestamp"})
+    @CreateDateColumn({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
     
 }

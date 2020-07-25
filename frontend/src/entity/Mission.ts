@@ -18,7 +18,7 @@ export interface Mission {
 }
 
 export const isValid = (entity: Mission) => {
-    return !!(entity.id &&
+    return !!(
         entity.berralBatchId &&
         entity.topic &&
         entity.description &&

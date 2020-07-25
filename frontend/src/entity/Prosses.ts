@@ -10,7 +10,7 @@ export interface Prosses {
 }
 
 export const isValid = (entity: Prosses) => {
-    return !!(entity.id &&
+    return !!(
         entity.name &&
         entity.description &&
         entity.berralTypeId &&

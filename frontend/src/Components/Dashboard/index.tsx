@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 
 // Material helpers
 import { makeStyles, Paper } from '@material-ui/core';

@@ -8,7 +8,7 @@ export interface BerralType {
 }
 
 export const isValid = (entity: BerralType) => {
-    return !!(entity.id &&
+    return !!(
         entity.name &&
         entity.volume &&
         entity.oakType &&

@@ -4,6 +4,7 @@ import { CommonController, commonControllerFactory } from './commonController';
 import storeAxios from '../storeAxios';
 
 interface berralTypeProps extends CommonController<BerralBatch> {
+    getAllActive: (batchId: number, lastBerralBatch: number) => Promise<BerralBatch[]>,
     getCount: (type: BerralBatchCounterBy) => Promise<{key: string, value: number}[]>
     getStatistic: (type: BerralBatchStatisticsBy) => Promise<{key: string, value: number}[]>
     getMonthChange: () => Promise<{lastMonth: number, thisMonth: number}>
@@ -14,6 +15,12 @@ export type BerralBatchStatisticsBy = 'berral-type' | 'prosses-chain' | 'spirit-
 
 export const BerralBatchController:berralTypeProps = {
     ...new commonControllerFactory<BerralBatch>().create('berral-batch'),
+    getAllActive: (batchId: number, lastBerralBatch: number) => 
+        storeAxios.get<BerralBatch[]>(`berral-batch/get-active/${batchId}/${lastBerralBatch}`).then(result => result.data),
+    addNew: (newEntity: BerralBatch) => 
+        storeAxios.post<BerralBatch>(`berral-batch/save-batch`, { entity: newEntity }),
+    update:(newEntity: BerralBatch) => 
+        storeAxios.post<BerralBatch>(`berral-batch/save-batch`, { entity: newEntity }),
     getCount: (type) => 
         storeAxios.get<{key: string, value: number}[]>(`berral-batch/count/${type}`).then(result => result.data),
     getStatistic: (type) => 

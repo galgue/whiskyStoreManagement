@@ -17,14 +17,14 @@ export interface BerralBatch {
     spiritType: string;
     ownership: string;
     locationatWarehouse: string;
-    isActive?: boolean;
+    isActive: boolean;
     missions?: Mission[];
     notes?: Note[];
     uses?: Use[];
 }
 
 export const isValid = (entity: BerralBatch) => {
-    return !!(entity.id &&
+    return (!!(
         entity.berralTypeId &&
         entity.berralType &&
         entity.prossesChainId &&
@@ -34,5 +34,9 @@ export const isValid = (entity: BerralBatch) => {
         entity.alcoholPercentage &&
         entity.spiritType &&
         entity.ownership &&
-        entity.locationatWarehouse)
+        entity.locationatWarehouse) || 
+        !!(entity.lastBerralBatchId &&
+            entity.alcoholPercentage &&
+            entity.berralTypeId &&
+            entity.locationatWarehouse ))
 }

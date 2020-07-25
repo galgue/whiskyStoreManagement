@@ -9,6 +9,6 @@ export interface User {
     password: string;
 }
 
-export const isValid = ({id, firstName, lastName, department, isManager, phone, email}: User) => {
-    return !!(id && firstName && lastName && department && isManager && phone && email);
+export const isValid = ({ firstName, lastName, department, isManager, phone, email}: User) => {
+    return !!( firstName && lastName && department  && phone && email)&& isManager ;
 }

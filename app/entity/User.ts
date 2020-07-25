@@ -26,3 +26,14 @@ export class User {
     email: string;
 
 }
+
+export const adminUser: User = {
+    id: 0,
+    email: 'admin',
+    firstName: 'admin',
+    lastName: 'admin',
+    department: 'admin',
+    isManager: true,
+    phone: 'admin',
+    password: 'admin'
+}

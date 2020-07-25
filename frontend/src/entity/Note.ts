@@ -11,7 +11,7 @@ export interface Note {
 }
 
 export const isValid = (entity: Note) => {
-    return !!(entity.id &&
+    return !!(
         entity.berralBatchId &&
         entity.content &&
         entity.creatorId) 
