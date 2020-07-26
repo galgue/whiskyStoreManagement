@@ -29,8 +29,8 @@ export const isValid = (entity: BerralBatch) => {
         entity.berralTypeId &&
         entity.prossesChainId &&
         entity.agingDuration &&
-        entity.quantityAtFill &&
-        entity.alcoholPercentage &&
+        entity.quantityAtFill === undefined &&
+        entity.alcoholPercentage === undefined &&
         entity.spiritType &&
         entity.ownership &&
         entity.locationatWarehouse) || 

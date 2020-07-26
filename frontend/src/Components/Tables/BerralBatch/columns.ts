@@ -38,14 +38,14 @@ export const tableColumns: Array<Column<BerralBatch>> = [
             })),
     },
     {
-        title: 'תקופת יישון', field: 'agingDuration', type: 'numeric',
+        title: 'תקופת יישון (ימים)**', field: 'agingDuration', type: 'numeric',
 
     },
     {
         title: 'כמות נוזל במילוי', field: 'quantityAtFill', type: 'numeric',
     },
     {
-        title: 'מק"ט אצוות חבית קודמת', field: 'lastBerralBatchId',removable: false, 
+        title: 'מק"ט אצוות חבית קודמת**', field: 'lastBerralBatchId',removable: false, 
         editComponent: (props) => 
             SelectEdit(() => BerralBatchController.getAllActive(
                 props.rowData.id || -1,
@@ -62,7 +62,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
             })),
     },
     {
-        title: 'אחוז אלכוהול במילוי', field: 'alcoholPercentage', type: 'numeric',
+        title: 'אחוז אלכוהול במילוי**', field: 'alcoholPercentage', type: 'numeric',
     },
     {
         title: 'סוג תזקיק', field: 'spiritType',
@@ -72,7 +72,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
 
     },
     {
-        title: 'מיקום חבית במחסן', field: 'locationatWarehouse',
+        title: 'מיקום חבית במחסן**', field: 'locationatWarehouse',
     },
     {
         title: 'פעילה', field: 'isActive', type: 'boolean', editable: 'never'

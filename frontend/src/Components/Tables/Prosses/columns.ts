@@ -14,7 +14,7 @@ export const tableColumns: Array<Column<Prosses>> = [
         title: 'תיאור תהליך', field: 'description',
     },
     {
-        title: 'משך', field: 'duration', type: 'numeric', removable: false,
+        title: 'משך (ימים)', field: 'duration', type: 'numeric', removable: false,
     },
     {
         title: 'סוג חבית', field: 'berralType.name',removable: false, 

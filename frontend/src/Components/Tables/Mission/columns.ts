@@ -32,7 +32,7 @@ export const tableColumns: Array<Column<Mission>> = [
         title: 'יוצר המשימה', field: 'creatorId',removable: false, 
         editComponent: (props) => 
             SelectEdit(() => UserController.getAll()
-            .then(users => users.data.map(user => ({
+            .then(users => users.data && users.data.map(user => ({
                 key: user.id,
                 value: `${user.id}: ${user.firstName} ${user.lastName}`
             }))), 
