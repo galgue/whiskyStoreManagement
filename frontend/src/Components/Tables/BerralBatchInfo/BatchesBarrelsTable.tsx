@@ -14,6 +14,6 @@ export const UsesOfBerralBatch = (berralBatch: BerralBatch) => {
     const options = isManager? managerTableOptions: workerTableOptions;
 
     return TableFactory.create('אצוות חביות', UseController, tableColumns,
-        isValid,
-        {...options, rowData: berralBatch.uses})();
+        isValid,)();
+        // {...options, rowData: () => Promise.resolve(berralBatch.uses)})();
 }

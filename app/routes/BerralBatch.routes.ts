@@ -45,7 +45,7 @@ router.get('/get-active/:batchId/:lastId', function(req, res, next) {
         .then(results => {
             res.send(results);
     }).catch(err => {
-        next(err);
+        next(err); 
     })
 })
 

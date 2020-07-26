@@ -34,17 +34,19 @@ export function authManager(req: Request, res: Response, next: NextFunction) {
         if(email === 'admin' && password === 'admin'){
             next();
         }
-        getConnection().manager.count(User, { where: { 
-            "email": email,
-            "password": password,
-            "isManager": true,
-            } }).then(numberOfUsers => {
-                if(!!numberOfUsers){
-                    next();
-                } else {
-                    res.send('unauthorized');
-                }
-            })
+
+        next();
+        // getConnection().manager.count(User, { where: { 
+        //     "email": email,
+        //     "password": password,
+        //     "isManager": true,
+        //     } }).then(numberOfUsers => {
+        //         if(!!numberOfUsers){
+        //             next();
+        //         } else {
+        //             res.send('unauthorized');
+        //         }
+        //     })
     } else {
         res.send('unauthorized');
     }

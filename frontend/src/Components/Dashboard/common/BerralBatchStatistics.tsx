@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Paper, Grid } from '@material-ui/core';
-import { BarChart } from './modules/BarChart';
-import { ChartTitle } from './modules/ChartTitle';
-import { BerralBatchController, BerralBatchStatisticsBy } from '../../controllers/berralBatch.controller';
-import { PieChart } from './modules/PieChart';
+import { BarChart } from '../modules/BarChart';
+import { ChartTitle } from '../modules/ChartTitle';
+import { BerralBatchController, BerralBatchStatisticsBy } from '../../../controllers/berralBatch.controller';
+import { PieChart } from '../modules/PieChart';
 
 export const BerralBatchStatisticsPieChart = ({size}: {size: {width: number, height: number}}) => {
     

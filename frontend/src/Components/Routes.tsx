@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Redirect, useHistory } from 'react-router-dom';
 import { SignIn } from './Login';
-import { Dashboard } from './Dashboard';
 import { BatchesBarrelPage } from '../Pages/BatchesBarrel';
 import { useSelector, useDispatch } from 'react-redux';
 import { stateProps } from '../interfaces';
@@ -15,6 +14,7 @@ import { CommentsPage } from '../Pages/Comments';
 import { BarrelUsagePage } from '../Pages/BarrelUsage';
 import { UserController } from '../controllers/users.controller';
 import { setLoggedUser } from '../Actions/actionsCreator';
+import { Dashboard } from './Dashboard/dashboard';
 
 export const LOGIN_ROUTE = '/Login';
 export const DASHBOARD_ROUTE = '/dashboard';
@@ -45,7 +45,7 @@ export const Routes = () => {
                     const userData = response.data;
                     if(userData) {
                         dispatch(setLoggedUser(userData));
-                        history.replace(BATCHES_BARRELS_ROUTE);
+                        history.replace(DASHBOARD_ROUTE);
                     } else {
                         history.replace(LOGIN_ROUTE);
                     }

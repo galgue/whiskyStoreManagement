@@ -6,7 +6,7 @@ import { UserController } from '../../../controllers/users.controller';
 
 export const tableColumns: Array<Column<Mission>> = [
     {
-        title: 'מק"ט אצוות חבית', field: 'id', editable: 'never',
+        title: 'מזהה', field: 'id', editable: 'never',
     },
     {
         title: 'מק"ט אצוות חבית', field: 'berralBatchId',removable: false, 
@@ -58,6 +58,24 @@ export const tableColumns: Array<Column<Mission>> = [
                 ...props.rowData,
                 executeById: newExecutorId,
             })),
+    },
+    {
+        title: 'תאריך תזכורת', field: 'reminderDate', type: 'date',
+    },
+    {
+        title: 'האם הושלמה', field: 'isCompleted', type: 'boolean',
+    },
+]
+
+export const userTableColumns: Array<Column<Mission>> = [
+    {
+        title: 'מק"ט אצוות חבית', field: 'berralBatchId',removable: false, 
+    },
+    {
+        title: 'נושא משימה', field: 'topic',
+    },
+    {
+        title: 'תיאור משימה', field: 'description',
     },
     {
         title: 'תאריך תזכורת', field: 'reminderDate', type: 'date',

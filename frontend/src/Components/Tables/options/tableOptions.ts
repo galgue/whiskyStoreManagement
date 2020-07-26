@@ -1,4 +1,5 @@
 import { Options } from 'material-table';
+import { findAllByDisplayValue } from '@testing-library/react';
 export const tableOptions: Options<any> = {
     draggable: false,
     headerStyle: {
@@ -10,5 +11,15 @@ export const tableOptions: Options<any> = {
         textAlign: 'right',
         float:'right'
     },
+    filtering: true
+}
+
+export const MiniTableOptions: Options<any> = {
+    draggable: false,
+    headerStyle: {
+        textAlign: 'right'
+    },
+    exportButton: false,
+    searchFieldAlignment: "left",
     filtering: true
 }

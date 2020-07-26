@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Paper, Grid } from '@material-ui/core';
-import { BerralBatchController, BerralBatchCounterBy } from '../../controllers/berralBatch.controller';
+import { BerralBatchController, BerralBatchCounterBy } from '../../../controllers/berralBatch.controller';
 
 export const NewBerralsThisMonth = ({size}: {size: {width: number, height: number}}) => {
     

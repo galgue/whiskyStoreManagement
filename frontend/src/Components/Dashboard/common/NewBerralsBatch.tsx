@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Paper, InputLabel, Select, MenuItem, Grid } from '@material-ui/core';
-import { BarChart } from './modules/BarChart';
-import { ChartTitle } from './modules/ChartTitle';
-import { BerralBatchController, BerralBatchCounterBy } from '../../controllers/berralBatch.controller';
+import React, { useState, useEffect } from 'react';
+import { Paper, Grid } from '@material-ui/core';
+import { BarChart } from './../modules/BarChart';
+import { ChartTitle } from './../modules/ChartTitle';
+import { BerralBatchController, BerralBatchCounterBy } from '../../../controllers/berralBatch.controller';
 
 export const NewBerralBatchesChart = ({size}: {size: {width: number, height: number}}) => {
     

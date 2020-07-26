@@ -5,8 +5,8 @@ import { makeStyles, Paper } from '@material-ui/core';
 
 // Material components
 import { Grid } from '@material-ui/core';
-import { NewBerralBatchesChart } from './NewBerralsBatch';
-import { BerralBatchStatisticsPieChart } from './BerralBatchStatistics';
+import { NewBerralBatchesChart } from '../common/NewBerralsBatch';
+import { BerralBatchStatisticsPieChart } from '../common/BerralBatchStatistics';
 import { NewBerralsThisMonth } from './NewBerralsThisMonth';
 
 
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Dashboard = () => {
+export const ManagerDashboard = () => {
   const classes = useStyles();
 
   return ( 
