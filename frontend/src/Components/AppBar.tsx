@@ -14,53 +14,58 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { Link, useLocation } from 'react-router-dom';
-import { Button} from '@material-ui/core';
+import { Link, useLocation, NavLink } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { LOGIN_ROUTE, BATCHES_BARRELS_TYPE_ROUTE, PROCCESS_MANAGEMENT_ROUTE, CHAIN_OF_PROCCESS_MANAGEMENT_ROUTE, USER_MANAGEMENT_ROUTE, BATCHES_BARRELS_ROUTE, MISSON_MANAGEMENT_ROUTE, COMMENTS_ROUTE, BARREL_USAGE_ROUTE } from '../Components/Routes';
+import { LOGIN_ROUTE, BATCHES_BARRELS_TYPE_ROUTE, PROCCESS_MANAGEMENT_ROUTE, CHAIN_OF_PROCCESS_MANAGEMENT_ROUTE, USER_MANAGEMENT_ROUTE, BATCHES_BARRELS_ROUTE, MISSON_MANAGEMENT_ROUTE, COMMENTS_ROUTE, BARREL_USAGE_ROUTE, DASHBOARD_ROUTE } from '../Components/Routes';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { BatchesTable } from './Tables/BerralBatch/BatchesBarrelsTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedUser, loggoutUser } from '../Actions/actionsCreator';
-import {stateProps} from '../interfaces';
+import { stateProps } from '../interfaces';
 import { UserController } from '../controllers/users.controller';
 
 
 const drawerWidth = 240;
 
 const listItemsBeforeDivider = [{
-    name:'ניהול אצוות חבית',
+    name: 'ניהול אצוות חבית',
     route: BATCHES_BARRELS_ROUTE
 },
 {
-    name:'ניהול משימות',
+    name: 'ניהול משימות',
     route: MISSON_MANAGEMENT_ROUTE
 },
 {
-    name:'ניהול הערות',
+    name: 'ניהול הערות',
     route: COMMENTS_ROUTE
 },
 {
-    name:'ניהול שימוש בחביות',
+    name: 'ניהול שימוש בחביות',
     route: BARREL_USAGE_ROUTE
 }
 ];
 
 const listItemsAfterDivider = [{
-    name:'ניהול סוגי חבית',
+    name: 'ניהול סוגי חבית',
     route: BATCHES_BARRELS_TYPE_ROUTE
 },
 {
-    name:'ניהול תהליכים',
+    name: 'ניהול תהליכים',
     route: PROCCESS_MANAGEMENT_ROUTE
 },
 {
-    name:'ניהול שרשראות תהליכים',
+    name: 'ניהול שרשראות תהליכים',
     route: CHAIN_OF_PROCCESS_MANAGEMENT_ROUTE
 },
 {
-    name:'ניהול משתמשים',
-    route: USER_MANAGEMENT_ROUTE
+    name: 'ניהול משתמשים',
+    route: USER_MANAGEMENT_ROUTE,
+    managerOnly: true
+},
+{
+    name: 'דאשבורד',
+    route: DASHBOARD_ROUTE,
 }
 ]
 const useStyles = makeStyles((theme: Theme) =>
@@ -85,9 +90,13 @@ const useStyles = makeStyles((theme: Theme) =>
         websiteName: {
             marginRight: '1vw'
         },
-        logOut:{
+        navBarLink: {
+            textDecoration: 'none',
+            fontSize: '1rem'
+        },
+        logOut: {
             color: 'white',
-            marginRight:'70vw'
+            marginRight: '70vw'
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -130,15 +139,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const WebsiteBar = () =>{
+export const WebsiteBar = () => {
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useDispatch();
-    const {loggedUser} = useSelector((state:stateProps)=>state.appState);
+    const { loggedUser } = useSelector((state: stateProps) => state.appState);
     const [open, setOpen] = useState(false);
     let history = useHistory();
 
-    const handleLogOut = () =>{
+    const handleLogOut = () => {
         UserController.logut().then(() => {
             history.push(LOGIN_ROUTE);
             dispatch(loggoutUser());
@@ -153,15 +162,16 @@ export const WebsiteBar = () =>{
         setOpen(false);
     };
 
-    return<>
-            <CssBaseline />
-           {loggedUser && <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
+    return <>
+        <CssBaseline />
+        {loggedUser && <AppBar
+            position="fixed"
+            className={clsx(classes.appBar, {
+                [classes.appBarShift]: open,
+            })}
+        >
+            <Toolbar>
+                {!open && <>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -171,51 +181,59 @@ export const WebsiteBar = () =>{
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography className = {classes.websiteName} variant="h6" noWrap>
+                    <Typography className={classes.websiteName} variant="h6" noWrap>
                         Milk & Honey
           </Typography>
-          <Button onClick = {handleLogOut} className = {classes.logOut}>
-          <Typography variant="h6" noWrap>
-          התנתק
+                    <Typography className={classes.websiteName} variant="h6" noWrap>
+                        שלום {loggedUser.userName}
+                    </Typography>
+                    <Button onClick={handleLogOut} className={classes.logOut}>
+                        <Typography variant="h6" noWrap>
+                            התנתק
           </Typography>
-          <ExitToAppIcon/>
-          </Button>
-                </Toolbar>
-            </AppBar>}
-            {loggedUser && <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="right"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    {listItemsBeforeDivider.map((item, index) => (
-                        <Link to={item.route}>
+                        <ExitToAppIcon />
+                    </Button>
+                </>}
+            </Toolbar>
+        </AppBar>}
+        {loggedUser && <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            anchor="right"
+            open={open}
+            classes={{
+                paper: classes.drawerPaper,
+            }}
+        >
+            <div className={classes.drawerHeader}>
+                <IconButton onClick={handleDrawerClose}>
+                    {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+            </div>
+            <Divider />
+            <List>
+                {listItemsBeforeDivider.map((item, index) => (
+                    <Link className={classes.navBarLink} to={item.route}>
                         <ListItem button key={item.name}>
-                            <ListItemText  style={{textAlign:'right'}} primary={item.name} />
+                            <ListItemText style={{ textAlign: 'right' }} primary={item.name} />
                         </ListItem>
-                        </Link>
-                    ))}
-                </List>
-                <Divider />
-                <List>
-                    {listItemsAfterDivider.map((item) => (
-                        <Link to={item.route}>
-                        <ListItem button key={item.name}>
-                            <ListItemText style={{textAlign:'right'}} primary={item.name} />
-                        </ListItem>
-                        </Link>
-                    ))}
-                </List>
-            </Drawer>}
-            </>
+                    </Link>
+                ))}
+            </List>
+            <Divider />
+            <List>
+                {listItemsAfterDivider.map((item) => {
+                    if (item.managerOnly && !loggedUser.isManager) {
+
+                    } else {
+                        return <NavLink activeStyle={{ color: 'blue' }} className={classes.navBarLink} to={item.route} >
+                            <ListItem button key={item.name}>
+                                <ListItemText style={{ textAlign: 'right' }} primary={item.name} />
+                            </ListItem>
+                        </NavLink>
+                    }
+                })}
+            </List>
+        </Drawer>}
+    </>
 }

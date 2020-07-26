@@ -1,5 +1,6 @@
 import { Options } from 'material-table';
 export const tableOptions: Options<any> = {
+   search:false,
     draggable: false,
     headerStyle: {
         textAlign: 'right'
