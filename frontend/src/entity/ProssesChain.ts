@@ -19,8 +19,6 @@ export const isValid = (entity: ProssesChain) => {
     return !!(
         entity.name &&
         entity.description &&
-        entity.prossesId1 && 
-        entity.prossesId2 && 
-        entity.prossesId3 && 
-        entity.prossesId4);
+        entity.prossesId1 
+        );
 }

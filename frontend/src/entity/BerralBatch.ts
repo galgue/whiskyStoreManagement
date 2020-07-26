@@ -26,9 +26,8 @@ export interface BerralBatch {
 export const isValid = (entity: BerralBatch) => {
     return (!!(
         entity.berralTypeId &&
-        entity.berralType &&
+        entity.berralTypeId &&
         entity.prossesChainId &&
-        entity.prossesChain &&
         entity.agingDuration &&
         entity.quantityAtFill &&
         entity.alcoholPercentage &&
