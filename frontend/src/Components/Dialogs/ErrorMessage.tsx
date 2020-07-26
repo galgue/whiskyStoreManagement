@@ -20,12 +20,13 @@ const useStyles = makeStyles({
 });
 
 export interface SimpleDialogProps {
-    message: string
+    message: string,
+    isOpen: boolean,
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const ErrorMessage = ({ message }: SimpleDialogProps) => {
+export const ErrorMessage = ({ message, isOpen, setIsOpen }: SimpleDialogProps) => {
     const classes = useStyles();
-    const [isOpen, setIsOpen] = useState(false);
     const [shownMessage, setshownMessage] = useState('');
 
     useEffect(() => {
@@ -35,11 +36,16 @@ export const ErrorMessage = ({ message }: SimpleDialogProps) => {
         }
     }, [message])
 
+    const onClose = () => {
+        setIsOpen(false);
+        message = '';
+    }
+
     return (
         <Dialog aria-labelledby="simple-dialog-title" open={isOpen}>
             <DialogTitle className={classes.title} id="simple-dialog-title">הודעת שגיאה</DialogTitle>
             <Typography className={classes.message} variant='h6'>{shownMessage}</Typography>
-            <Button color='primary' onClick={() => setIsOpen(false)} className={classes.button}>אישור</Button>
+            <Button color='primary' onClick={() => onClose()} className={classes.button}>אישור</Button>
         </Dialog>
     );
 }

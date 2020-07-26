@@ -31,9 +31,11 @@ export const BerralBatchStatisticsPieChart = ({size}: {size: {width: number, hei
       }, [])
 
     return (
-        <Paper style={{height: '100%'}}>
-          <Grid container>
-            <Grid item xs={12} style={{height: '30%'}}>
+        <Paper style={{height: '100%', width: size.width}}>
+          <Grid container direction="row"
+                justify="center"
+                alignItems="stretch" style={{height: '100%', width: size.width}}>
+            <Grid item xs={12} style={{height: '10%'}}>
               <ChartTitle<BerralBatchStatisticsBy>
                 title={"סטטיסטיקת אצוות חבית לפי"}
                 selections={[
@@ -45,7 +47,11 @@ export const BerralBatchStatisticsPieChart = ({size}: {size: {width: number, hei
                 onSelectionChange={(selection) => setType(selection)}
                 />
             </Grid>
-            <Grid item xs={12} style={{height: '70%'}}>
+            <Grid item xs={12}  
+            container direction="column"
+            justify="center"
+            alignItems="stretch"
+            >
               {type === 'berral-type' && <PieChart
                   data={data['berral-type']}
                   size={size}

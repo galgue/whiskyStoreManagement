@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import MaterialTable, { MTableCell, Column, Options } from 'material-table';
-import { ErrorMessage } from './ErrorMessage';
 import { Mission } from '../../entity/Mission';
 import { TableFactory } from '../Tables/TableFactory';
 import { MissionController } from '../../controllers/mission.controller';

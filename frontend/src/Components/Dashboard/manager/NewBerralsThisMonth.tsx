@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Paper, Grid } from '@material-ui/core';
+import { Paper, Grid, Typography } from '@material-ui/core';
 import { BerralBatchController, BerralBatchCounterBy } from '../../../controllers/berralBatch.controller';
 
 export const NewBerralsThisMonth = ({size}: {size: {width: number, height: number}}) => {
@@ -28,12 +28,17 @@ export const NewBerralsThisMonth = ({size}: {size: {width: number, height: numbe
 
       return (
           <Paper style={{height: size.height, width: size.width}}>
-            <Grid container>
+            <Grid container
+              direction="column"
+              justify="center"
+              alignItems="center"
+              spacing={3}
+            >
               <Grid item xs={12} style={{height: '50%'}}>
-                {`חביות חדשות החודש: ${data?.thisMonth}`}
+                <Typography>{`חביות חדשות החודש: ${data?.thisMonth}`}</Typography>
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
-                {`שינוי משבוע שעבר: ${raiseFromLastMonth}%`}
+               <Typography>{`שינוי משבוע שעבר: ${raiseFromLastMonth}%`}</Typography> 
               </Grid>
             </Grid>   
           </Paper>

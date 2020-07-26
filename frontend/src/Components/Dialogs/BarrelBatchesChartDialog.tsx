@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { blue } from '@material-ui/core/colors';
-import { BerralBatch } from '../../entity/BerralBatch';
 import { BerralBatchStatisticsPieChart } from '../Dashboard/common/BerralBatchStatistics';
 import { NewBerralBatchesChart } from '../Dashboard/common/NewBerralsBatch';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
+import { BerralBatchChart } from '../Dashboard/common/BerralBatchChart';
 
 const useStyles = makeStyles({
   button: {
@@ -32,12 +31,33 @@ export function BarrelBatchesChartDialog(props: SimpleDialogProps) {
   const { onOpen, open } = props;
 
   const [toShow, setToShow] = useState<'bar' | 'pie'>('bar');
+  const [toShowTitle, setToShowTitle] = useState('גרף עוגה');
+
+  const changeToShowState = () => {
+    if(toShow === 'bar') {
+      setToShow('pie');
+      setToShowTitle('גרף עמודות')
+    } else {
+      setToShow('bar');
+      setToShowTitle('גרף עוגה')
+    }
+  }
 
   return (
     <Dialog aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">דוחות אצוות חבית</DialogTitle>
-      {toShow === 'pie' && <BerralBatchStatisticsPieChart size={{height: 500, width: 500}}/>}
-      {toShow === 'bar' && <NewBerralBatchesChart size={{height: 500, width: 500}}/>}
+      <Button color='primary' onClick={() => changeToShowState()} className={classes.button}>
+        {`הצג ${toShowTitle}`}
+      </Button>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="stretch"
+      >
+      {toShow === 'pie' && <BerralBatchStatisticsPieChart size={{height: 300, width: 600}}/>}
+      {toShow === 'bar' && <BerralBatchChart size={{height: 300, width: 600}}/>} 
+      </Grid>
       <Button color='primary' onClick={() => onOpen(false)} className={classes.button}>סגור</Button>
     </Dialog>
   );

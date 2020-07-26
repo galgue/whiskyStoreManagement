@@ -29,9 +29,11 @@ export const NewBerralBatchesChart = ({size}: {size: {width: number, height: num
       }, [type])
 
     return (
-        <Paper style={{height: '100%'}}>
-          <Grid container>
-            <Grid item xs={12} style={{height: '30%'}}>
+      <Paper style={{height: '100%', width: size.width}}>
+      <Grid container direction="row"
+            justify="center"
+            alignItems="stretch" style={{height: '100%', width: size.width}}>
+            <Grid item xs={12} style={{height: '10%'}}>
               <ChartTitle<BerralBatchCounterBy>
                 title={"כמות אצוות חבית לפי"}
                 selections={[
@@ -43,7 +45,7 @@ export const NewBerralBatchesChart = ({size}: {size: {width: number, height: num
                 onSelectionChange={(selection) => setType(selection)}
                 />
             </Grid>
-            <Grid item xs={12} style={{height: '70%'}}>
+            <Grid item xs={12} style={{}}>
               {type === 'quarters' && <BarChart
                   data={data['quarters']}
                   size={size}

@@ -35,6 +35,7 @@ export const TableFactory = {
             ) {
         return () => {
             const [data, setData] = useState<T[]>([]);
+            const [isOpen, setIsOpen] = useState(false);
 
             const initData = async () => {
                 if(options.rowData) {
@@ -55,7 +56,7 @@ export const TableFactory = {
             }, []);
     
             return (<>
-                <ErrorMessage message={message} />
+                <ErrorMessage message={message} isOpen={isOpen} setIsOpen={setIsOpen} />
                 <MaterialTable
                     title={title}
                     style={options.height? {...style, height: options.height}: style}
@@ -72,7 +73,10 @@ export const TableFactory = {
                         })
                     }}
                     editable={editable(controller, 
-                                    initData, (message: string) => setMessage(message), 
+                                    initData, (message: string) => {
+                                        setMessage(message);
+                                        setIsOpen(true);
+                                    },
                                     isValid, options)}
                 />
             </>

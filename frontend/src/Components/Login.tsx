@@ -43,6 +43,7 @@ export const SignIn = () => {
   let history = useHistory();
 
   const [message, setMessage] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = () => {
     UserController.login(email, password)
@@ -52,17 +53,19 @@ export const SignIn = () => {
           dispatch(setLoggedUser(userData));
           history.push(DASHBOARD_ROUTE);
         } else {
+          setIsOpen(true);
           setMessage('מייל או סיסמא לא נכונים')
         }
       })
       .catch(err => {
+        setIsOpen(true);
         setMessage('התחברות נכשלה')
       }) 
   }
 
   return (
     <>
-      <ErrorMessage message={message} />
+      <ErrorMessage message={message} isOpen={isOpen} setIsOpen={setIsOpen} />
       <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
