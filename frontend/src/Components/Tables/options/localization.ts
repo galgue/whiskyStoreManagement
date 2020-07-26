@@ -16,6 +16,7 @@ export const localization: Localization = {
             cancelTooltip: 'בטל',
             saveTooltip: 'שמור',
         },
+        emptyDataSourceMessage:'אין שורות להצגה'
     },
     header: {
         actions: 'פעולות'

@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setAppState } from './Actions/actionsCreator';
 import { WebsiteBar } from './Components/AppBar';
+import { Box } from '@material-ui/core';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,9 @@ export const App = () => {
   return   <BrowserRouter>
   <RightToLeft>
   <WebsiteBar/>
+  <Box marginTop={'1em'}>
   <Routes/>
+  </Box>
 </RightToLeft>
 </BrowserRouter>
 }

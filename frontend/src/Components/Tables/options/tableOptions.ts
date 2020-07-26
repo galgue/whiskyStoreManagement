@@ -1,6 +1,7 @@
 import { Options } from 'material-table';
 import { findAllByDisplayValue } from '@testing-library/react';
 export const tableOptions: Options<any> = {
+   search:false,
     draggable: false,
     headerStyle: {
         textAlign: 'right'

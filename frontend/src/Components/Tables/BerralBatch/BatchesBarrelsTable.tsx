@@ -12,7 +12,6 @@ import { CommentsDialog } from '../../Dialogs/CommentsDialog';
 import { BarrelBatchesUsageDialog } from '../../Dialogs/BarreBatchesUsage';
 import { Typography } from '@material-ui/core';
 import { BarrelBatchesChartDialog } from '../../Dialogs/BarrelBatchesChartDialog';
-
  
 
 export const BatchesTable = () =>{
