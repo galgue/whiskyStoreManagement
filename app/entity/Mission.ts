@@ -41,7 +41,7 @@ export class Mission {
     @JoinColumn({ name: "executeById", referencedColumnName: 'id'})
     executeBy: User;
 
-    @Column()
+    @Column({default: false})
     isCompleted: boolean;
     
 }

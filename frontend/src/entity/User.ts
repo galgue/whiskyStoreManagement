@@ -10,5 +10,5 @@ export interface User {
 }
 
 export const isValid = ({ firstName, lastName, department, isManager, phone, email}: User) => {
-    return !!( firstName && lastName && department  && phone && email) && (isManager != null) ;
+    return !!( firstName && lastName && department  && phone && email) ;
 }

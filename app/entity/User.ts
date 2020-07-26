@@ -13,7 +13,7 @@ export class User {
     @Column()
     department: string;
 
-    @Column()
+    @Column({default: false})
     isManager: boolean;
 
     @Column()

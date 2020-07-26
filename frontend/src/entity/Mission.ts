@@ -24,6 +24,5 @@ export const isValid = (entity: Mission) => {
         entity.description &&
         entity.reminderDate &&
         entity.creatorId &&
-        entity.executeById &&
-        entity.isCompleted)
+        entity.executeById)
 }
