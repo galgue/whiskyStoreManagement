@@ -3,7 +3,7 @@ import { Route, Redirect, useHistory } from 'react-router-dom';
 import { SignIn } from './Login';
 import { BatchesBarrelPage } from '../Pages/BatchesBarrel';
 import { useSelector, useDispatch } from 'react-redux';
-import { stateProps } from '../interfaces';
+import { stateProps } from './interfaces';
 import { BarrelTypeManagementPage } from '../Pages/BarrelTypeManagement';
 import { BatchesBarrelTaskManagement } from '../Pages/BatchesBarrelTaskManagement';
 import { ChainsOfproccessManagementPage } from '../Pages/ChainsOfProccessManagement';

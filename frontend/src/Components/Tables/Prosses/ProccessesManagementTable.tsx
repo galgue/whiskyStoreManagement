@@ -3,7 +3,7 @@ import { TableFactory } from '../TableFactory';
 import { ProssesController } from '../../../controllers/prosses.controller';
 import { isValid } from '../../../entity/Prosses';
 import { useSelector } from 'react-redux';
-import { stateProps } from '../../../interfaces';
+import { stateProps } from '../../interfaces';
 import { managerTableOptions, workerTableOptions } from '../options/managerTableOptions';
 
 

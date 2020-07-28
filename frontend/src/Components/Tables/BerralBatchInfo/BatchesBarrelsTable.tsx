@@ -2,7 +2,7 @@ import { tableColumns } from './columns';
 import { TableFactory } from '../TableFactory';
 import { BerralBatch } from '../../../entity/BerralBatch';
 import { isValid } from '../../../entity/Uses';
-import { stateProps } from '../../../interfaces';
+import { stateProps } from '../../interfaces';
 import { useSelector } from 'react-redux';
 import { managerTableOptions, workerTableOptions } from '../options/managerTableOptions';
 import { UseController } from '../../../controllers/use.controller';

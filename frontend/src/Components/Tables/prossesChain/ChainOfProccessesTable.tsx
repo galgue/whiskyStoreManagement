@@ -3,7 +3,7 @@ import { TableFactory } from '../TableFactory';
 import { ProssesChainController } from '../../../controllers/prossesChain.controller';
 import { isValid } from '../../../entity/ProssesChain';
 import { useSelector } from 'react-redux';
-import { stateProps } from '../../../interfaces';
+import { stateProps } from '../../interfaces';
 import { managerTableOptions, workerTableOptions } from '../options/managerTableOptions';
 import React, { useState } from 'react';
 import { Typography } from '@material-ui/core';

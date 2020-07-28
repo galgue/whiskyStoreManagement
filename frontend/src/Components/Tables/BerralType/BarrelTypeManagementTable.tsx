@@ -3,7 +3,7 @@ import { BerralTypeController } from '../../../controllers/berralType.controller
 import { TableFactory } from '../TableFactory';
 import { isValid } from '../../../entity/BerralType';
 import { useSelector } from 'react-redux';
-import { stateProps } from '../../../interfaces';
+import { stateProps } from '../../interfaces';
 import { managerTableOptions, workerTableOptions } from '../options/managerTableOptions';
 
 export const BarrelTypeManagementTable = () =>{

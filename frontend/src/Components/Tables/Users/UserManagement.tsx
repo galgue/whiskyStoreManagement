@@ -3,7 +3,7 @@ import { UserController } from '../../../controllers/users.controller';
 import { tableColumns } from './columns';
 import { managerTableOptions, workerTableOptions } from '../options/managerTableOptions';
 import { useSelector } from 'react-redux';
-import { stateProps } from '../../../interfaces';
+import { stateProps } from '../../interfaces';
 import { isValid } from '../../../entity/User';
 
 

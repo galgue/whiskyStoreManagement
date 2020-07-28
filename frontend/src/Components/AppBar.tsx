@@ -22,8 +22,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { BatchesTable } from './Tables/BerralBatch/BatchesBarrelsTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedUser, loggoutUser } from '../Actions/actionsCreator';
-import { stateProps } from '../interfaces';
 import { UserController } from '../controllers/users.controller';
+import { stateProps } from './interfaces';
 
 
 const drawerWidth = 240;

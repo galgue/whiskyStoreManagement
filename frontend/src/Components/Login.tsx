@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Copyright } from './Copyright';
 import { DASHBOARD_ROUTE } from './Routes';
 import { setLoggedUser } from '../Actions/actionsCreator';
-import {stateProps} from '../interfaces';
+import {stateProps} from './interfaces';
 import { UserController } from '../controllers/users.controller';
 import { ErrorMessage } from './Dialogs/ErrorMessage';
 

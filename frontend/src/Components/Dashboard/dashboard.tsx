@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useSelector } from 'react-redux';
-import { stateProps } from '../../interfaces';
+import { stateProps } from '../interfaces';
 import { WorkerDashboard } from './worker/WorkerDashboard';
 import { ManagerDashboard } from './manager/ManagerDashboard';
 
