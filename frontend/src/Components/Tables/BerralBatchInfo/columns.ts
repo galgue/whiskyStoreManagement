@@ -10,7 +10,8 @@ export const tableColumns: Array<Column<Use>> =
                 title: 'מק"ט שימוש', field: 'id', removable: false, editable: 'never'
             },
             {
-                title: 'מק"ט אצוות חבית', field: 'berralBatchId',removable: false, 
+                title: 'מק"ט אצוות חבית', field: 'berralBatchId',removable: false,
+                validate:(rowData)=>!!rowData.berralBatchId,
                 editComponent: (props) => 
                 SelectEdit(() => BerralBatchController.getAll()
                     .then(berralBatchs => berralBatchs.data.map(berralBatch => ({
@@ -24,10 +25,10 @@ export const tableColumns: Array<Column<Use>> =
                     }))
             },
             {
-                title: 'מטרת השימוש', field: 'purpose',removable: false,
+                title: 'מטרת השימוש', field: 'purpose',removable: false,validate:(rowData)=>!!rowData.purpose
             },
             {
-                title: 'כמות השימוש', field: 'quantity',type:'numeric',removable: false,
+                title: 'כמות השימוש', field: 'quantity',type:'numeric',removable: false,validate:(rowData)=>!!rowData.quantity
             },
             {
                 title: 'מספר עובד כותב השימוש', field: 'creatorId', type:'numeric', removable: false,

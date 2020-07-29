@@ -11,7 +11,7 @@ const localServerOptions: ConnectionOptions = {
     "host": "localhost",
     "port": 3306,
     "username": "root",
-    "password": "drinkMe123",
+    "password": "144smile",
     "database": "whisky",
     "synchronize": true,
     "logging": true,

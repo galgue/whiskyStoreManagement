@@ -9,10 +9,10 @@ export const tableColumns: Array<Column<ProssesChain>> = [
         title: 'מק"ט שרשרת תהליך', field: 'id', type: 'numeric', removable: false, editable: 'never'
     },
     {
-        title: 'שם שרשרת תהליך', field: 'name',
+        title: 'שם שרשרת תהליך', field: 'name',validate:(rowData)=>!!rowData.name
     },
     {
-        title: 'תיאור שרשרת תהליך', field: 'description',
+        title: 'תיאור שרשרת תהליך', field: 'description',validate:(rowData)=>!!rowData.description
     },
     {
         title: 'מספר תהליכים', field: 'numberOfProsseses', type: 'numeric', removable: false, editable: 'never'

@@ -27,14 +27,14 @@ export const tableColumns: Array<Column<BerralBatch>> = [
             })),
     },
     {
-        title: 'תקופת יישון (ימים)**', field: 'agingDuration', type: 'numeric', editable: 'never'
+        title: 'תקופת יישון (ימים)', field: 'agingDuration', type: 'numeric', editable: 'never',
+    },
+    {
+        title: 'כמות נוזל במילוי', field: 'quantityAtFill', type: 'numeric',validate:(rowData)=> (!!rowData.quantityAtFill)
 
     },
     {
-        title: 'כמות נוזל במילוי', field: 'quantityAtFill', type: 'numeric',
-    },
-    {
-        title: 'מק"ט אצוות חבית קודמת**', field: 'lastBerralBatchId',removable: false, 
+        title: 'מק"ט אצוות חבית קודמת', field: 'lastBerralBatchId',removable: false, 
         editComponent: (props) => 
             SelectEdit(() => BerralBatchController.getAllActive(
                 props.rowData.id || -1,
@@ -51,17 +51,17 @@ export const tableColumns: Array<Column<BerralBatch>> = [
             })),
     },
     {
-        title: 'אחוז אלכוהול במילוי**', field: 'alcoholPercentage', type: 'numeric',
-    },
-    {
-        title: 'סוג תזקיק', field: 'spiritType',
-    },
-    {
-        title: 'בעלים', field: 'ownership',
+        title: 'אחוז אלכוהול במילוי', field: 'alcoholPercentage', type: 'numeric',validate:(rowData)=> (!!rowData.alcoholPercentage)
 
     },
     {
-        title: 'מיקום חבית במחסן**', field: 'locationatWarehouse',
+        title: 'סוג תזקיק', field: 'spiritType',validate:(rowData)=> (!!rowData.spiritType)
+    },
+    {
+        title: 'בעלים', field: 'ownership',validate:(rowData)=> (!!rowData.ownership)
+    },
+    {
+        title: 'מיקום חבית במחסן', field: 'locationatWarehouse',validate:(rowData)=> (!!rowData.locationatWarehouse)
     },
     {
         title: 'תאריך התחלה', field: 'createdAt', type: 'date',
@@ -70,6 +70,6 @@ export const tableColumns: Array<Column<BerralBatch>> = [
         title: 'תאריך סיום', field: 'endDate', type: 'date', editable: 'onUpdate'
     },
     {
-        title: 'פעילה', field: 'isActive', type: 'boolean', editable: 'never'
+        title: 'פעילה', field: 'isActive', type: 'boolean',
     }
 ]

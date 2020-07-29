@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  title:{
+fontFamily:'impact'
+  }
 }));
 
 export const SignIn = () => {
@@ -69,10 +72,10 @@ export const SignIn = () => {
       <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
+            <Typography className={classes.title} component="h1" variant="h5">
               MILK & HONEY
             </Typography>
-            <img height='100px' width='100px' 
+            <img height='200px' width='200px' 
               src='https://upload.wikimedia.org/wikipedia/commons/1/1d/Logo_Milk_%26_Honey_Distillery.jpg'/>
             <form className={classes.form} noValidate>
               <TextField

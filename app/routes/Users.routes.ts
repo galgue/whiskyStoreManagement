@@ -36,7 +36,7 @@ export const UsersRoute: EntityRoute = {
             let newUser: User = req.body.entity as User;
 
             if (newUser.password.length !== 0){
-                newUser.password = sign(newUser.password, 'drinkme');
+                newUser.password = sign(newUser.password, '144smile');
             }
 
             getConnection().manager.save(User, newUser).then(newUser => {

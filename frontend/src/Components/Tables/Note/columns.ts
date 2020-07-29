@@ -23,7 +23,7 @@ export const tableColumns: Array<Column<Note>> = [
             }))
     },
     {
-        title: 'הערה', field: 'content',removable: false,
+        title: 'הערה', field: 'content',removable: false,validate:(rowData)=>!!rowData.content
     },
     {
         title: 'מספר עובד כותב הערה', field: 'creatorId', type:'numeric', removable: false,
