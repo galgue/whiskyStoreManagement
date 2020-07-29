@@ -44,7 +44,6 @@ export const ChainChart = ({size}: {size: {width: number, height: number}}) => {
             >
               <PieChart
                   data={data}
-                  size={size}
                   />
             </Grid>
         </Grid>

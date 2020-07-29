@@ -8,6 +8,7 @@ import { Grid } from '@material-ui/core';
 import { NewBerralBatchesChart } from '../common/NewBerralsBatch';
 import { BerralBatchStatisticsPieChart } from '../common/BerralBatchStatistics';
 import { NewBerralsThisMonth } from './NewBerralsThisMonth';
+import { SpiritProfit } from './SpiritProfite';
 
 
 
@@ -37,15 +38,24 @@ export const ManagerDashboard = () => {
             <Grid item xs={3}>
             </Grid>
             <Grid item xs={3}>
+              <Paper>
+                <SpiritProfit size={{height: 100, width: 200}} />
+              </Paper>
             </Grid>
             <Grid item xs={3}>
-              <NewBerralsThisMonth size={{height: 100, width: 200}} />
+              <Paper>
+                <NewBerralsThisMonth size={{height: 100, width: 200}} />
+              </Paper>
             </Grid>
             <Grid item xs={6}>
-              <BerralBatchStatisticsPieChart size={{height: 300, width: 500}}/>
+              <Paper>
+                <BerralBatchStatisticsPieChart />
+              </Paper>
             </Grid>
             <Grid item xs={6}>
-              <NewBerralBatchesChart size={{height: 300, width: 500}}/>
+              <Paper>
+                <NewBerralBatchesChart/>
+              </Paper>
             </Grid>
         </Grid>
       </div>

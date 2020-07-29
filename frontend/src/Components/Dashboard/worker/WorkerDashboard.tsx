@@ -50,10 +50,10 @@ export const WorkerDashboard = () => {
             justify="center"
             alignItems="stretch" spacing={4}>
             <Grid item >
-            <NewBerralBatchesChart size={{height: 200, width: 500}}/>
+            <NewBerralBatchesChart />
             </Grid>
             <Grid item>
-              <BerralBatchStatisticsPieChart size={{height: 200, width: 500}}/>
+              <BerralBatchStatisticsPieChart/>
             </Grid>
           </Grid>
         </Grid>

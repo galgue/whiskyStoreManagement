@@ -4,7 +4,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import { BerralBatchStatisticsPieChart } from '../Dashboard/common/BerralBatchStatistics';
 import { NewBerralBatchesChart } from '../Dashboard/common/NewBerralsBatch';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, Paper } from '@material-ui/core';
 import { BerralBatchChart } from '../Dashboard/common/BerralBatchChart';
 
 const useStyles = makeStyles({
@@ -54,9 +54,12 @@ export function BarrelBatchesChartDialog(props: SimpleDialogProps) {
         direction="row"
         justify="center"
         alignItems="stretch"
+        style={{width: '100%'}}
       >
-      {toShow === 'pie' && <BerralBatchStatisticsPieChart size={{height: 300, width: 600}}/>}
-      {toShow === 'bar' && <BerralBatchChart size={{height: 300, width: 600}}/>} 
+        <Grid item xs={12} >
+          {toShow === 'pie' && <BerralBatchStatisticsPieChart/>}
+          {toShow === 'bar' && <BerralBatchChart/>} 
+        </Grid> 
       </Grid>
       <Button color='primary' onClick={() => onOpen(false)} className={classes.button}>סגור</Button>
     </Dialog>

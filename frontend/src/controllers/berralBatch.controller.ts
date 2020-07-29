@@ -11,7 +11,7 @@ interface berralTypeProps extends CommonController<BerralBatch> {
 }
 
 export type BerralBatchCounterBy = 'quarters' | 'years' | 'months';
-export type BerralBatchStatisticsBy = 'berral-type' | 'prosses-chain' | 'spirit-type';
+export type BerralBatchStatisticsBy = 'berral-type' | 'prosses-chain' | 'spirit-type' | 'spirit-type-liter';
 
 export const BerralBatchController:berralTypeProps = {
     ...new commonControllerFactory<BerralBatch>().create('berral-batch'),

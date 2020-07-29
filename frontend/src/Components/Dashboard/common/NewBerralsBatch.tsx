@@ -4,7 +4,7 @@ import { BarChart } from './../modules/BarChart';
 import { ChartTitle } from './../modules/ChartTitle';
 import { BerralBatchController, BerralBatchCounterBy } from '../../../controllers/berralBatch.controller';
 
-export const NewBerralBatchesChart = ({size}: {size: {width: number, height: number}}) => {
+export const NewBerralBatchesChart = () => {
     
         const [data, setData] = useState<{[key: string] :{key: string, value: number}[]}>({
           'quarters': [],
@@ -29,10 +29,10 @@ export const NewBerralBatchesChart = ({size}: {size: {width: number, height: num
       }, [type])
 
     return (
-      <Paper style={{height: '100%', width: size.width}}>
+      <div style={{height: '100%', width: '100%'}}>
       <Grid container direction="row"
             justify="center"
-            alignItems="stretch" style={{height: '100%', width: size.width}}>
+            alignItems="stretch" style={{height: '100%', width: '100%'}}>
             <Grid item xs={12} style={{height: '10%'}}>
               <ChartTitle<BerralBatchCounterBy>
                 title={"כמות אצוות חבית לפי"}
@@ -48,19 +48,16 @@ export const NewBerralBatchesChart = ({size}: {size: {width: number, height: num
             <Grid item xs={12} style={{}}>
               {type === 'quarters' && <BarChart
                   data={data['quarters']}
-                  size={size}
                   />}
                 {type === 'months' && <BarChart
                   data={data['months']}
-                  size={size}
                   />}
                 {type === 'years' && <BarChart
                   data={data['years']}
-                  size={size}
                   />}
             </Grid>
         </Grid>
-        </Paper>
+        </div>
 
   )
 

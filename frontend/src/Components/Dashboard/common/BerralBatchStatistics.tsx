@@ -5,7 +5,7 @@ import { ChartTitle } from '../modules/ChartTitle';
 import { BerralBatchController, BerralBatchStatisticsBy } from '../../../controllers/berralBatch.controller';
 import { PieChart } from '../modules/PieChart';
 
-export const BerralBatchStatisticsPieChart = ({size}: {size: {width: number, height: number}}) => {
+export const BerralBatchStatisticsPieChart = () => {
     
       const [data, setData] = useState<{[key: string] :{key: string, value: number}[]}>({
         'berral-type': [],
@@ -31,10 +31,10 @@ export const BerralBatchStatisticsPieChart = ({size}: {size: {width: number, hei
       }, [])
 
     return (
-        <Paper style={{height: '100%', width: size.width}}>
+        <div style={{height: '100%', width: '100%'}}>
           <Grid container direction="row"
                 justify="center"
-                alignItems="stretch" style={{height: '100%', width: size.width}}>
+                alignItems="stretch" style={{height: '100%', width: '100%'}}>
             <Grid item xs={12} style={{height: '10%'}}>
               <ChartTitle<BerralBatchStatisticsBy>
                 title={"סטטיסטיקת אצוות חבית לפי"}
@@ -54,19 +54,16 @@ export const BerralBatchStatisticsPieChart = ({size}: {size: {width: number, hei
             >
               {type === 'berral-type' && <PieChart
                   data={data['berral-type']}
-                  size={size}
                   />}
                 {type === 'prosses-chain' && <PieChart
                   data={data['prosses-chain']}
-                  size={size}
                   />}
                 {type === 'spirit-type' && <PieChart
                   data={data['spirit-type']}
-                  size={size}
                   />}
             </Grid>
         </Grid>
-        </Paper>
+        </div>
 
   )
 

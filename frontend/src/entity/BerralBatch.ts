@@ -13,11 +13,15 @@ export interface BerralBatch {
     agingDuration: number;
     quantityAtFill: number;
     lastBerralBatchId?: number | null;
+    lastBerralBatch: BerralBatch;
     alcoholPercentage: number;
     spiritType: string;
     ownership: string;
     locationatWarehouse: string;
     isActive: boolean;
+    placeInChain: number;
+    createdAt: Date;
+    endDate: Date;
     missions?: Mission[];
     notes?: Note[];
     uses?: Use[];
@@ -25,12 +29,9 @@ export interface BerralBatch {
 
 export const isValid = (entity: BerralBatch) => {
     return (!!(
-        entity.berralTypeId &&
-        entity.berralTypeId &&
         entity.prossesChainId &&
-        entity.agingDuration &&
-        entity.quantityAtFill === undefined &&
-        entity.alcoholPercentage === undefined &&
+        entity.quantityAtFill !== undefined &&
+        entity.alcoholPercentage !== undefined &&
         entity.spiritType &&
         entity.ownership &&
         entity.locationatWarehouse) || 

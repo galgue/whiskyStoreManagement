@@ -1,26 +1,27 @@
-import { getConnection } from 'typeorm';
+import { getConnection, OneToOne } from 'typeorm';
 import { PrimaryGeneratedColumn, CreateDateColumn, AfterLoad } from 'typeorm';
 import { Mission } from './Mission';
-import { MissionsRoute } from './../routes/Missions.routes';
 import { ProssesChain } from './ProssesChain';
 import {Entity, Column, PrimaryColumn, ManyToOne, JoinColumn, OneToMany} from 'typeorm';
 import { BerralType } from './BerralType';
 import { Note } from './Notes';
 import { Use } from './Uses';
 
+const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+
 @Entity('BerralBatchs')
 export class BerralBatch {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({nullable: true})
     berralTypeId: number;
 
     @ManyToOne(() => BerralType, berralType => berralType.id)
     @JoinColumn({ name: "berralTypeId", referencedColumnName: 'id'})
     berralType: BerralType;
 
-    @Column({ nullable: true })
+    @Column()
     prossesChainId: number;
 
     @ManyToOne(() => ProssesChain, prossesChain => prossesChain.id)
@@ -28,13 +29,14 @@ export class BerralBatch {
     prossesChain: ProssesChain;
 
     @Column()
-    agingDuration: number;
-
-    @Column()
     quantityAtFill: number;
 
     @Column({ nullable: true })
-    lastBerralBatchId: number;
+    lastBerralBatchId: number | null;
+
+    @OneToOne(() => BerralBatch, berralBatch => berralBatch.id)
+    @JoinColumn({ name: "lastBerralBatchId", referencedColumnName: 'id'})
+    lastBerralBatch: BerralBatch | null;
 
     @Column()
     alcoholPercentage: number;
@@ -50,17 +52,37 @@ export class BerralBatch {
 
     isActive: boolean;
 
+    @Column({nullable: true})
+    endDate: Date;
+
+    agingDuration: number;
+
     @AfterLoad()
-    async getIsActive() {
-         await getConnection().manager.count(BerralBatch, { where: { 
+    async setIsActiveAndEndDate() {
+         await getConnection().manager.findOneOrFail(BerralBatch, { where: { 
             "lastBerralBatchId": this.id,
-         } }).then(numberOfLast => {
-            this.isActive = !numberOfLast;
+         } }).then(prevBerralBatch => {
+            this.isActive = false;
+            if(!this.endDate) {
+               this.endDate = prevBerralBatch.createdAt;
+            }
          })
          .catch(() => {
             this.isActive = true;
          });
+
+         if(this.endDate) {
+            this.agingDuration = Math.round(Math.abs((this.createdAt.getTime() - this.endDate.getTime()) / (oneDay)));
+            if(this.endDate < new Date()){
+               this.isActive = false;
+            }
+         } else {
+            const days = new Date().getTime() - this.createdAt.getTime();
+            this.agingDuration = Math.round(Math.abs(days > 0 ? days : 0 / (oneDay)));
+         }
     }
+
+    placeInChain: number;
 
     @OneToMany(type => Mission, mission => mission.berralBatch)
     missions: Mission[];
@@ -71,7 +93,7 @@ export class BerralBatch {
     @OneToMany(type => Use, use => use.berralBatch)
     uses: Use[];
 
-    @CreateDateColumn({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+    @Column({ precision: null, type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
     
 }

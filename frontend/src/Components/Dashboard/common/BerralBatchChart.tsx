@@ -6,7 +6,7 @@ import { BerralBatch } from '../../../entity/BerralBatch';
 import { BarChart } from '../modules/BarChart';
 import { PieChart } from '../modules/PieChart';
 
-export const BerralBatchChart = ({size}: {size: {width: number, height: number}}) => {
+export const BerralBatchChart = () => {
     
       const [data, setData] = useState<{key: string, value: number}[]>([]);
 
@@ -30,27 +30,24 @@ export const BerralBatchChart = ({size}: {size: {width: number, height: number}}
       }, [])
 
     return (
-        <Paper style={{height: '100%', width: size.width}}>
+        <div style={{height: '100%', width: '100%'}}>
           <Grid container direction="row"
                 justify="center"
-                alignItems="stretch" style={{height: '100%', width: size.width}}>
+                alignItems="stretch" style={{height: '100%', width: '100%'}}>
             <Grid item xs={12} style={{height: '10%'}}>
               <ChartTitle<BerralBatchStatisticsBy>
                 title={"אצוות חבית לפי זמן ישון"}
                 />
             </Grid>
             <Grid item xs={12}  
-            container direction="column"
+            container direction="row"
             justify="center"
-            alignItems="stretch"
+            alignItems="center"
             >
-              <BarChart
-                  data={data}
-                  size={size}
-                  />
+              <BarChart data={data}/>
             </Grid>
         </Grid>
-        </Paper>
+        </div>
 
   )
 

@@ -55,7 +55,7 @@ export function editable<T> (
                                 callback().then(() => resolve());
                             }).catch(err => {
                                 resolve();
-                                onError('התרחשה תקלה במחיקת שדרה, בדוק האם הישות קשורה לישות אחרת')
+                                onError('התרחשה תקלה במחיקת רשומה, בדוק האם הישות קשורה לישות אחרת')
                             })
                         }, 600);
                     }) : undefined,

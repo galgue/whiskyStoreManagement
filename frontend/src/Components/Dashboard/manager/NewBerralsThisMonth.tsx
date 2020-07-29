@@ -27,7 +27,7 @@ export const NewBerralsThisMonth = ({size}: {size: {width: number, height: numbe
       }
 
       return (
-          <Paper style={{height: size.height, width: size.width}}>
+          <div style={{height: size.height, width: size.width}}>
             <Grid container
               direction="column"
               justify="center"
@@ -38,9 +38,9 @@ export const NewBerralsThisMonth = ({size}: {size: {width: number, height: numbe
                 <Typography>{`חביות חדשות החודש: ${data?.thisMonth}`}</Typography>
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
-               <Typography>{`שינוי משבוע שעבר: ${raiseFromLastMonth}%`}</Typography> 
+               <Typography>{`שינוי מחודש שעבר: ${raiseFromLastMonth}%`}</Typography> 
               </Grid>
             </Grid>   
-          </Paper>
+          </div>
     )
 }

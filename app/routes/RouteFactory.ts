@@ -8,6 +8,7 @@ interface optionsProps<T> {
     isAuthNeeded?: boolean,
     isManagerAuthNeeded?: boolean,
     deletePointerEntities?: (entity: T) => T,
+    alterBeforeSend?: (all: T[]) => T[]
 }
 
 export interface EntityRoute {
@@ -23,9 +24,11 @@ export let RouteFactory  = {
             relations: [], 
             isAuthNeeded: false, 
             isManagerAuthNeeded: false,
-            deletePointerEntities: (entity: T) => entity},
+            deletePointerEntities: (entity: T) => entity,
+            alterBeforeSend: (all: T[]) => all,
+        },
         ): Router {
-        let {relations, isAuthNeeded, isManagerAuthNeeded, deletePointerEntities} = options;    
+        let {relations, isAuthNeeded, isManagerAuthNeeded, deletePointerEntities, alterBeforeSend} = options;    
         let router = Router();
 
         let managerAuth = (req: Request, res: Response, next: NextFunction) => { next() };
@@ -33,8 +36,6 @@ export let RouteFactory  = {
         if(isAuthNeeded){
             router.use(auth);
         }
-
-
 
         if(isManagerAuthNeeded) {
             managerAuth = authManager;
@@ -48,7 +49,7 @@ export let RouteFactory  = {
             getConnection().manager.find(objectType, 
                 { relations: options.relations })
                 .then(results => {
-                res.send(results);
+                res.send(alterBeforeSend? alterBeforeSend(results) : results);
             }).catch(err => {
                 next(err);
             })

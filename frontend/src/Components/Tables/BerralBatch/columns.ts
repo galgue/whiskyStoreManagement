@@ -10,18 +10,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
         title: 'מק"ט', field: 'id', type: 'numeric', removable: false, editable: 'never'
     },
     {
-        title: 'סוג חבית', field: 'berralType.name',removable: false, 
-        editComponent: (props) => 
-            SelectEdit(() => BerralTypeController.getAll()
-            .then(berralTypes => berralTypes.data.map(berralType => ({
-                key: berralType.id,
-                value: `${berralType.name}`
-            }))), 
-            props.rowData.berralTypeId, 
-            (newBerralTypeId) => props.onRowDataChange({
-                ...props.rowData,
-                berralTypeId: newBerralTypeId,
-            })),
+        title: 'סוג חבית', field: 'berralType.name',removable: false, editable:'never'
     },
     {
         title: 'שם שרשרת', field: 'prossesChain.name',removable: false, 
@@ -38,7 +27,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
             })),
     },
     {
-        title: 'תקופת יישון (ימים)**', field: 'agingDuration', type: 'numeric',
+        title: 'תקופת יישון (ימים)**', field: 'agingDuration', type: 'numeric', editable: 'never'
 
     },
     {
@@ -73,6 +62,12 @@ export const tableColumns: Array<Column<BerralBatch>> = [
     },
     {
         title: 'מיקום חבית במחסן**', field: 'locationatWarehouse',
+    },
+    {
+        title: 'תאריך התחלה', field: 'createdAt', type: 'date',
+    },
+    {
+        title: 'תאריך סיום', field: 'endDate', type: 'date', editable: 'onUpdate'
     },
     {
         title: 'פעילה', field: 'isActive', type: 'boolean', editable: 'never'

@@ -45,7 +45,7 @@ export class Server {
     constructor(app: Express, routes: EntityRoute[]) {
         this.app = app;
 
-        createConnection(freeSqlOnlineServerOptions);
+        createConnection(localServerOptions);
 
         this.app.use(express.static(path.resolve("./") + "/build/frontend"));
 
