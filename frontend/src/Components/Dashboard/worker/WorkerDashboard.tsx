@@ -40,8 +40,8 @@ export const WorkerDashboard = () => {
         >
           <Grid container xs={6}>
             <Grid item xs={12}>
-            <Paper style={{height: 500, width: 500}}>
-                <MissionOfUserTable height={500}/>
+            <Paper style={{height: 800, width: 500}}>
+                <MissionOfUserTable height={800}/>
               </Paper>
             </Grid>
           </Grid>

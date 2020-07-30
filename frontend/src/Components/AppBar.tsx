@@ -28,22 +28,26 @@ import { stateProps } from './interfaces';
 
 const drawerWidth = 240;
 
-const listItemsBeforeDivider = [{
-    name: 'ניהול אצוות חבית',
-    route: BATCHES_BARRELS_ROUTE
-},
-{
-    name: 'ניהול משימות',
-    route: MISSON_MANAGEMENT_ROUTE
-},
-{
-    name: 'ניהול הערות',
-    route: COMMENTS_ROUTE
-},
-{
-    name: 'ניהול שימוש בחביות',
-    route: BARREL_USAGE_ROUTE
-}
+const listItemsBeforeDivider = [
+    {
+        name: 'עמוד הבית',
+        route: DASHBOARD_ROUTE,
+    }, {
+        name: 'ניהול אצוות חבית',
+        route: BATCHES_BARRELS_ROUTE
+    },
+    {
+        name: 'ניהול משימות',
+        route: MISSON_MANAGEMENT_ROUTE
+    },
+    {
+        name: 'ניהול הערות',
+        route: COMMENTS_ROUTE
+    },
+    {
+        name: 'ניהול שימוש בחביות',
+        route: BARREL_USAGE_ROUTE
+    }
 ];
 
 const listItemsAfterDivider = [{
@@ -63,10 +67,7 @@ const listItemsAfterDivider = [{
     route: USER_MANAGEMENT_ROUTE,
     managerOnly: true
 },
-{
-    name: 'דאשבורד',
-    route: DASHBOARD_ROUTE,
-}
+
 ]
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -96,7 +97,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         logOut: {
             color: 'white',
-            marginRight: '70vw'
+            backgroundColor:'#3f51b5',
+            '&:hover': {
+                backgroundColor: 'white',
+                color: '#3f51b5'
+            }
         },
         menuButton: {
             marginRight: theme.spacing(2),
@@ -187,12 +192,6 @@ export const WebsiteBar = () => {
                     <Typography className={classes.websiteName} variant="h6" noWrap>
                         שלום {loggedUser.userName}
                     </Typography>
-                    <Button onClick={handleLogOut} className={classes.logOut}>
-                        <Typography variant="h6" noWrap>
-                            התנתק
-          </Typography>
-                        <ExitToAppIcon />
-                    </Button>
                 </>}
             </Toolbar>
         </AppBar>}
@@ -205,6 +204,12 @@ export const WebsiteBar = () => {
                 paper: classes.drawerPaper,
             }}
         >
+            <Button onClick={handleLogOut} className={classes.logOut}>
+                <Typography variant="h6" noWrap>
+                    התנתק
+          </Typography>
+                <ExitToAppIcon />
+            </Button>
             <div className={classes.drawerHeader}>
                 <IconButton onClick={handleDrawerClose}>
                     {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

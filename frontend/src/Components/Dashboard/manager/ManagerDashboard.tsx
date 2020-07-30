@@ -39,12 +39,12 @@ export const ManagerDashboard = () => {
             </Grid>
             <Grid item xs={3}>
               <Paper>
-                <SpiritProfit size={{height: 100, width: 200}} />
+                <SpiritProfit size={{height: 200, width: 200}} />
               </Paper>
             </Grid>
             <Grid item xs={3}>
               <Paper>
-                <NewBerralsThisMonth size={{height: 100, width: 200}} />
+                <NewBerralsThisMonth size={{height: 200, width: 200}} />
               </Paper>
             </Grid>
             <Grid item xs={6}>
