@@ -24,6 +24,6 @@ export const tableColumns: Array<Column<User>> = [
         title: 'מייל', field: 'email',removable: false,validate:(rowData)=>!!rowData.email
     },
     {
-        title: 'סיסמא', field: 'password',removable: false,validate:(rowData)=>!!rowData.password
+        title: 'סיסמא', field: 'password',removable: true, emptyValue: '****', 
     }
 ]

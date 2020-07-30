@@ -32,28 +32,27 @@ export const UsersRoute: EntityRoute = {
             })
         });
 
-        router.post(SIGNUP_URI,  authManager, (req: Request, res: Response): void => {
+        router.post(SIGNUP_URI,  authManager, (req: Request, res: Response, next): void => {
             let newUser: User = req.body.entity as User;
 
             if (newUser.password.length !== 0){
-                newUser.password = sign(newUser.password, '144smile');
+                newUser.password = sign(newUser.password, 'drinkme');
             }
 
             getConnection().manager.save(User, newUser).then(newUser => {
                 res.send(newUser);
             }).catch(err => {
-                switch (err.code) { 
-                    case 'ER_DUP_ENTRY':
-                       res.send("deplicate Email");
-                  }
+                next(err);
             })
         });
 
         router.post('/update', authManager, function (req, res, next) {
             let editUser: User = req.body.entity as User;
 
-            if (editUser.password?.length !== 0){
+            if (editUser.password && editUser.password.length !== 0){
                 editUser.password = sign(editUser.password, 'drinkme');
+            } else {
+                delete editUser.password;
             }
 
             getConnection().manager.save(User, editUser)
@@ -143,6 +142,15 @@ export const UsersRoute: EntityRoute = {
         router.post(LOGOUT_URI, (req: Request, res: Response): void => {
             res.clearCookie('session');
             res.sendStatus(200);
+        });
+
+        router.post('/delete', authManager, function (req, res, next) {
+            getConnection().manager.delete(User, req.body.entity.id)
+            .then(result => {
+                res.send(result);
+            }).catch(err => {
+                next(err);
+            })
         });
 
         return router;
