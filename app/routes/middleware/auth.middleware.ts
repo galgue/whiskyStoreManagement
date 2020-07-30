@@ -33,9 +33,11 @@ export function authManager(req: Request, res: Response, next: NextFunction) {
 
         if(email === 'admin' && password === 'admin'){
             next();
+        } else {
+            next();
         }
 
-        next();
+        
         // getConnection().manager.count(User, { where: { 
         //     "email": email,
         //     "password": password,

@@ -20,15 +20,19 @@ export const UsersRoute: EntityRoute = {
 
         let router = Router();
 
-        router.get(GET_ALL_URI, authManager, (_: Request, res: Response): void => {
+        router.get(GET_ALL_URI, authManager, (_: Request, res: Response, next): void => {
             getConnection().manager.find(User).then(users => {
                 res.send(users);
+            }).catch(err => {
+                next(err);
             })
         });
 
-        router.get(GET_URI, authManager, (req: Request, res: Response): void => {
+        router.get(GET_URI, authManager, (req: Request, res: Response, next): void => {
             getConnection().manager.findOne(User, req.param('id')).then(user => {
                 res.send(user);
+            }).catch(err => {
+                next(err);
             })
         });
 
