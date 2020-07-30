@@ -27,15 +27,16 @@ const useStyles = makeStyles({
 export interface SimpleDialogProps {
     open: boolean;
     data: Use[];
-    onOpen: (isOpen: boolean) => void
+    onOpen: (isOpen: boolean) => void;
+    onFinish: () => void;
 }
 
 export const BarrelBatchesUsageDialog = (props: SimpleDialogProps) => {
     const classes = useStyles();
-    const { open, data, onOpen } = props;   
+    const { open, data, onOpen, onFinish } = props;   
     
     let table:() => JSX.Element = TableFactory.create('שימוש', UseController, tableColumns, isValid, 
-    {...workerTableOptions, rowData: data });
+    {...workerTableOptions, rowData: data, onFinish });
 
     const initTable = () => {
         table = TableFactory.create('שימוש', UseController, tableColumns, isValid, 
@@ -50,7 +51,8 @@ export const BarrelBatchesUsageDialog = (props: SimpleDialogProps) => {
     
     
     return (<>
-        <Dialog aria-labelledby="simple-dialog-title" open={open}>
+        <Dialog aria-labelledby="simple-dialog-title" open={open}
+            fullWidth={true} maxWidth={'md'}>
             {table()}
             <Button color='primary' onClick={() => onOpen(false)} className={classes.button}>סגור</Button>
         </Dialog>

@@ -28,10 +28,13 @@ export const TableFactory = {
                 height?: number,
                 onSelectRow?: (entity: T | undefined) => void,
                 selectedRow?: T,
-                actions?: (Action<T> | ((rowData: T) => Action<T>))[]
+                actions?: (Action<T> | ((rowData: T) => Action<T>))[],
+                onFinish?: () => void
             } = 
                 {isRowAdd: true, isRowEdit: true, isRowDelete: true, 
-                    onSelectRow: (entity: T | undefined) => {}, selectedRow: undefined}
+                    onSelectRow: (entity: T | undefined) => {}, selectedRow: undefined,
+                    onFinish: () => {}
+                }
             ) {
         return () => {
             const [data, setData] = useState<T[]>([]);
@@ -58,6 +61,7 @@ export const TableFactory = {
             return (<>
                 <ErrorMessage message={message} isOpen={isOpen} setIsOpen={setIsOpen} />
                 <MaterialTable
+                    key={JSON.stringify(data)}
                     title={title}
                     style={options.height? {...style, height: options.height}: style}
                     onRowClick={(evt, rowData) => options.onSelectRow && options.onSelectRow(rowData)}
@@ -76,6 +80,7 @@ export const TableFactory = {
                                     initData, (message: string) => {
                                         setMessage(message);
                                         setIsOpen(true);
+                                        options.onFinish && options.onFinish();
                                     },
                                     isValid, options)}
                 />

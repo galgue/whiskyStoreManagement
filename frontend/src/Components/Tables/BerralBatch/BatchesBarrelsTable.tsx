@@ -21,6 +21,10 @@ export const BatchesTable = () =>{
     const [openBarrelBatchesUsageCard, setOpenBarrelBatchesUsageCard] = useState(false);
     const [openBarrelBatchesChartCard, setOpenBarrelBatchesChartCard] = useState(false);
 
+    const [reRander, setRerander] = useState(0);
+
+    const reRanderTable = () => setRerander(reRanderPrv => ++reRanderPrv);
+
     const isManager = useSelector((state:stateProps) => state.appState.loggedUser?.isManager || false);
     
     let actions=[
@@ -53,15 +57,15 @@ export const BatchesTable = () =>{
         {...(isManager? managerTableOptions: workerTableOptions), 
             onSelectRow: setSelectedRow, selectedRow,
             actions
-        })();
+        });
 
     return (
     <>
-        {table}
-        {selectedRow?.missions && <MissonDialog onOpen = {setOpenMissonCard} open={openMissonCard} data={selectedRow.missions} />}
-        {selectedRow?.notes && <CommentsDialog onOpen = {setOpenCommentsCard} open={openCommentsCard} data={selectedRow.notes} />}
-        {selectedRow?.uses && <BarrelBatchesUsageDialog onOpen = {setOpenBarrelBatchesUsageCard} open={openBarrelBatchesUsageCard} data={selectedRow.uses} />}
-        {<BarrelBatchesChartDialog onOpen = {setOpenBarrelBatchesChartCard} open={openBarrelBatchesChartCard} />}
+        {table()}
+        {selectedRow?.missions && <MissonDialog key={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenMissonCard} open={openMissonCard} data={selectedRow.missions} />}
+        {selectedRow?.notes && <CommentsDialog key={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenCommentsCard} open={openCommentsCard} data={selectedRow.notes} />}
+        {selectedRow?.uses && <BarrelBatchesUsageDialog key={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenBarrelBatchesUsageCard} open={openBarrelBatchesUsageCard} data={selectedRow.uses} />}
+        {<BarrelBatchesChartDialog onOpen={setOpenBarrelBatchesChartCard} open={openBarrelBatchesChartCard} />}
     </>
     );
 }

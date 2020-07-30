@@ -44,7 +44,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
                 key: berralbatch.id,
                 value: `${berralbatch.id}`
             }))), 
-            props.rowData.lastBerralBatchId || 0, 
+            props.rowData.lastBerralBatchId || undefined, 
             (newBerralBatchId) => props.onRowDataChange({
                 ...props.rowData,
                 lastBerralBatchId: newBerralBatchId || null,

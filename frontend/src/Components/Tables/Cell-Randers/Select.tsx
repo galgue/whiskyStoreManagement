@@ -5,7 +5,7 @@ import { deepOrange } from "@material-ui/core/colors";
 
 export function SelectEdit(
     getSelectors: () => Promise<{key: number, value: string}[]>, 
-    selected: number,
+    selected: number | undefined,
     onChange: (selected: number) => void) {
 
         const [selections, setSelections] = useState<{key: number, value: string}[]>([]);

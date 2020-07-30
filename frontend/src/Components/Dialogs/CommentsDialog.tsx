@@ -8,7 +8,7 @@ import { Mission } from '../../entity/Mission';
 import { TableFactory } from '../Tables/TableFactory';
 import { MissionController } from '../../controllers/mission.controller';
 import { tableColumns } from '../Tables/Note/columns';
-import { workerTableOptions } from '../Tables/options/managerTableOptions';
+import { managerTableOptions } from '../Tables/options/managerTableOptions';
 import { isValid } from '../../entity/Note';
 import { Note } from '../../entity/Note';
 import { NoteController } from '../../controllers/note.controller';
@@ -30,29 +30,20 @@ const useStyles = makeStyles({
 export interface SimpleDialogProps {
     open: boolean;
     data: Note[];
-    onOpen: (isOpen: boolean) => void
+    onOpen: (isOpen: boolean) => void;
+    onFinish: () => void;
 }
 
 export const CommentsDialog = (props: SimpleDialogProps) => {
     const classes = useStyles();
-    const { open, data, onOpen } = props;
+    const { open, data, onOpen, onFinish } = props;
 
     let table:() => JSX.Element = TableFactory.create('הערות', NoteController, tableColumns, isValid, 
-        {...workerTableOptions, rowData: data });
-    
-    const initTable = () => {
-        table = TableFactory.create('הערות', NoteController, tableColumns, isValid, 
-        {...workerTableOptions, rowData: data });
-    }
-
-    initTable();
-
-    useEffect(() => {
-        initTable();
-    }, [data])
-    
+        { rowData: data, onFinish });
+   
     return (<>
-        <Dialog aria-labelledby="simple-dialog-title" open={open}>
+        <Dialog aria-labelledby="simple-dialog-title" open={open} 
+            fullWidth={true} maxWidth={'md'}>
             {table()}
             <Button color='primary' onClick={() => onOpen(false)} className={classes.button}>סגור</Button>
         </Dialog>

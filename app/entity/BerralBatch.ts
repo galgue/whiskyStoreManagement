@@ -50,6 +50,7 @@ export class BerralBatch {
     @Column()
     locationatWarehouse: string;
 
+    @Column({default: true})
     isActive: boolean;
 
     @Column({nullable: true})
@@ -62,13 +63,11 @@ export class BerralBatch {
          await getConnection().manager.findOneOrFail(BerralBatch, { where: { 
             "lastBerralBatchId": this.id,
          } }).then(prevBerralBatch => {
-            this.isActive = false;
             if(!this.endDate) {
                this.endDate = prevBerralBatch.createdAt;
             }
          })
-         .catch(() => {
-            this.isActive = true;
+         .catch((err) => {
          });
 
          if(this.endDate) {

@@ -1,4 +1,4 @@
-import { Note } from './../../../entity/Note';
+import { Note } from '../../../entity/Note';
 import { Column } from 'material-table';
 import { SelectEdit } from '../Cell-Randers/Select';
 import { BerralBatchController } from '../../../controllers/berralBatch.controller';
@@ -6,7 +6,7 @@ import { UserController } from '../../../controllers/users.controller';
 
 export const tableColumns: Array<Column<Note>> = [
     {
-        title: 'מק"ט הערה', field: 'id',removable: false, editable: 'never'
+        title: 'מק"ט הערה', field: 'id',removable: false, editable: 'never', 
     },
     {
         title: 'מק"ט אצוות חבית', field: 'berralBatchId',removable: false, 
