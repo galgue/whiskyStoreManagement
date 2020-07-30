@@ -12,7 +12,11 @@ export const tableOptions: Options<any> = {
         textAlign: 'right',
         float:'right'
     },
-    filtering: true
+    filterCellStyle:{
+        textAlign: 'right'
+    },
+    filtering: true,
+    pageSize:20
 }
 
 export const MiniTableOptions: Options<any> = {
@@ -20,7 +24,11 @@ export const MiniTableOptions: Options<any> = {
     headerStyle: {
         textAlign: 'right'
     },
+    filterCellStyle:{
+        textAlign: 'right'
+    },
     exportButton: false,
     searchFieldAlignment: "left",
-    filtering: true
+    filtering: true,
+    pageSize:20
 }

@@ -35,7 +35,7 @@ export const NewBerralsThisMonth = ({size}: {size: {width: number, height: numbe
               spacing={3}
             >
               <Grid item xs={12} style={{height: '50%'}}>
-                <Typography>{`חביות חדשות החודש: ${data?.thisMonth}`}</Typography>
+                <Typography>{`חביות חדשות החודש: ${data?.thisMonth?data?.thisMonth:0}`}</Typography>
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
                <Typography>{`שינוי מחודש שעבר: ${raiseFromLastMonth}%`}</Typography> 

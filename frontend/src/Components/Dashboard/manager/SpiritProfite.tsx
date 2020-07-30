@@ -26,7 +26,7 @@ export const SpiritProfit = ({size}: {size: {width: number, height: number}}) =>
               alignItems="center"
               spacing={3}
             >
-              <Grid item xs={12} style={{height: '50%'}}>
+              <Grid item xs={12} style={{height: '50%',}}>
                 <Typography>{`הכנסות`}</Typography>
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
