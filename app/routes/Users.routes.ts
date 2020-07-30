@@ -76,7 +76,7 @@ export const UsersRoute: EntityRoute = {
             if(email === 'admin' && password === 'admin'){
                 res.cookie(
                     'session',sign({email, password}, 'drinkme'), 
-                    { maxAge: 900000, httpOnly: true }
+                    { maxAge: 90000000, httpOnly: true }
                     );
                 res.send(adminUser);
             }
@@ -92,7 +92,7 @@ export const UsersRoute: EntityRoute = {
                  if(!!numberOfUsers){
                     res.cookie(
                         'session',sign({email, password}, 'drinkme'), 
-                        { maxAge: 900000, httpOnly: true }
+                        { maxAge: 900000000, httpOnly: true }
                         );
                     getUser(email).then(userInfo => {
                         res.send(userInfo);
