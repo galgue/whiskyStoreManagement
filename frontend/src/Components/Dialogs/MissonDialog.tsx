@@ -10,6 +10,7 @@ import { MissionController } from '../../controllers/mission.controller';
 import { tableColumns } from '../Tables/Mission/columns';
 import { workerTableOptions } from '../Tables/options/managerTableOptions';
 import { isValid } from '../../entity/Mission';
+import { BerralBatchController } from '../../controllers/berralBatch.controller';
 
 const useStyles = makeStyles({
     button: {
@@ -30,25 +31,19 @@ export interface SimpleDialogProps {
     data: Mission[];
     onOpen: (isOpen: boolean) => void;
     onFinish: () => void;
+    batchId: number;
 }
 
 export const MissonDialog = (props: SimpleDialogProps) => {
     const classes = useStyles();
-    const { open, data, onOpen, onFinish } = props;
+    const { open, onOpen, onFinish, batchId } = props;
 
-    let table:() => JSX.Element = TableFactory.create('ניהול משימות', MissionController, tableColumns, isValid, 
-    {...workerTableOptions, rowData: data, onFinish });
-
-    const initTable = () => {
-        table = TableFactory.create('ניהול משימות', MissionController, tableColumns, isValid, 
-        {...workerTableOptions, rowData: data });
+    const getData = () => {
+        return BerralBatchController.get(batchId).then(res => res.data.missions || []);
     }
 
-    initTable();
-
-    useEffect(() => {
-        initTable();
-    }, [data])
+    let table:() => JSX.Element = TableFactory.create('ניהול משימות', MissionController, tableColumns, isValid, 
+    { ...workerTableOptions, getRowData: getData, onFinish });
 
     return (<>
         <Dialog aria-labelledby="simple-dialog-title" open={open}

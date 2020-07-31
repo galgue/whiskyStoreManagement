@@ -8,10 +8,11 @@ import { Mission } from '../../entity/Mission';
 import { TableFactory } from '../Tables/TableFactory';
 import { MissionController } from '../../controllers/mission.controller';
 import { tableColumns } from '../Tables/Note/columns';
-import { managerTableOptions } from '../Tables/options/managerTableOptions';
+import { managerTableOptions, workerTableOptions } from '../Tables/options/managerTableOptions';
 import { isValid } from '../../entity/Note';
 import { Note } from '../../entity/Note';
 import { NoteController } from '../../controllers/note.controller';
+import { BerralBatchController } from '../../controllers/berralBatch.controller';
 
 const useStyles = makeStyles({
     button: {
@@ -32,14 +33,19 @@ export interface SimpleDialogProps {
     data: Note[];
     onOpen: (isOpen: boolean) => void;
     onFinish: () => void;
+    batchId: number;
 }
 
 export const CommentsDialog = (props: SimpleDialogProps) => {
     const classes = useStyles();
-    const { open, data, onOpen, onFinish } = props;
+    const { open, onOpen, onFinish, batchId } = props;
+
+    const getData = () => {
+        return BerralBatchController.get(batchId).then(res => res.data.notes || []);
+    }
 
     let table:() => JSX.Element = TableFactory.create('הערות', NoteController, tableColumns, isValid, 
-        { rowData: data, onFinish });
+        { ...workerTableOptions, getRowData: getData, onFinish });
    
     return (<>
         <Dialog aria-labelledby="simple-dialog-title" open={open} 

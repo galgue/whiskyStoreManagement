@@ -62,9 +62,9 @@ export const BatchesTable = () =>{
     return (
     <>
         {table()}
-        {selectedRow?.missions && <MissonDialog key={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenMissonCard} open={openMissonCard} data={selectedRow.missions} />}
-        {selectedRow?.notes && <CommentsDialog key={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenCommentsCard} open={openCommentsCard} data={selectedRow.notes} />}
-        {selectedRow?.uses && <BarrelBatchesUsageDialog key={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenBarrelBatchesUsageCard} open={openBarrelBatchesUsageCard} data={selectedRow.uses} />}
+        {selectedRow?.missions && <MissonDialog key={selectedRow.id} batchId={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenMissonCard} open={openMissonCard} data={selectedRow.missions} />}
+        {selectedRow?.notes && <CommentsDialog key={selectedRow.id} batchId={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenCommentsCard} open={openCommentsCard} data={selectedRow.notes} />}
+        {selectedRow?.uses && <BarrelBatchesUsageDialog key={selectedRow.id} batchId={selectedRow.id} onFinish={reRanderTable} onOpen = {setOpenBarrelBatchesUsageCard} open={openBarrelBatchesUsageCard} data={selectedRow.uses} />}
         {<BarrelBatchesChartDialog onOpen={setOpenBarrelBatchesChartCard} open={openBarrelBatchesChartCard} />}
     </>
     );

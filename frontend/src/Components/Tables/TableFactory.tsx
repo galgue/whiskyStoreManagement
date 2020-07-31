@@ -10,10 +10,6 @@ import { Column } from 'material-table';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { ErrorMessage } from '../Dialogs/ErrorMessage';
 import { AxiosResponse } from 'axios';
-
-function Alert(props: AlertProps) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-  }
  
 export const TableFactory = {
     create: function<T extends {id: number}>
@@ -25,6 +21,7 @@ export const TableFactory = {
             options: {isRowAdd?: boolean, isRowEdit?: boolean, isRowDelete?: boolean, 
                 getRowDataFromServer?: () => Promise<AxiosResponse<T[]>>, 
                 rowData?: T[],
+                getRowData?: () => Promise<T[]>,
                 height?: number,
                 onSelectRow?: (entity: T | undefined) => void,
                 selectedRow?: T,
@@ -47,6 +44,8 @@ export const TableFactory = {
                     return  options.getRowDataFromServer().then((data) => {
                         setData(data.data);
                     });
+                } else if(options.getRowData) {
+                    return options.getRowData().then(result => setData(result));
                 } else {
                     return controller.getAll().then(result => setData(result.data))
                 }

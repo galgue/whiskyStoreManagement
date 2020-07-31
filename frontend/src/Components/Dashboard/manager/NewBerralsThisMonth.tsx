@@ -27,18 +27,18 @@ export const NewBerralsThisMonth = ({size}: {size: {width: number, height: numbe
       }
 
       return (
-          <div style={{height: size.height, width: size.width}}>
+          <div style={{height: size.height}}>
             <Grid container
               direction="column"
-              justify="center"
+              justify="space-around"
               alignItems="center"
-              spacing={3}
+              spacing={4}
             >
-              <Grid item xs={12} style={{height: '50%'}}>
-                <Typography>{`חביות חדשות החודש: ${data?.thisMonth?data?.thisMonth:0}`}</Typography>
+              <Grid item xs={12}>
+                  <Typography variant="h5">{`חביות חדשות החודש: ${data?.thisMonth?data?.thisMonth:0}`}</Typography>
               </Grid>
-              <Grid item xs={12} style={{height: '50%'}}>
-               <Typography>{`שינוי מחודש שעבר: ${raiseFromLastMonth}%`}</Typography> 
+              <Grid item xs={12}>
+                <Typography variant="h5">{`שינוי מחודש שעבר: ${raiseFromLastMonth}%`}</Typography> 
               </Grid>
             </Grid>   
           </div>

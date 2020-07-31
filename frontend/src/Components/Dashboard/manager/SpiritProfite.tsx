@@ -19,7 +19,7 @@ export const SpiritProfit = ({size}: {size: {width: number, height: number}}) =>
       }
 
       return (
-          <div style={{height: size.height, width: size.width}}>
+          <div style={{height: size.height}}>
             <Grid container
               direction="column"
               justify="center"
@@ -27,16 +27,16 @@ export const SpiritProfit = ({size}: {size: {width: number, height: number}}) =>
               spacing={3}
             >
               <Grid item xs={12} style={{height: '50%',}}>
-                <Typography>{`הכנסות`}</Typography>
+                <Typography variant="h5">{`הכנסות`}</Typography>
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
-               <Typography>{`וויסקי: ${findTypeAsMoney('וויסקי')}  ש"ח`}</Typography> 
+               <Typography variant="subtitle1">{`וויסקי: ${findTypeAsMoney('וויסקי')}  ש"ח`}</Typography> 
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
-               <Typography>{`רוטס: ${findTypeAsMoney('רוטס')}  ש"ח`}</Typography> 
+               <Typography variant="subtitle1">{`רוטס: ${findTypeAsMoney('רוטס')}  ש"ח`}</Typography> 
               </Grid>
               <Grid item xs={12} style={{height: '50%'}}>
-               <Typography>{`ג'ין: ${findTypeAsMoney(`ג'ין`)}  ש"ח`}</Typography> 
+               <Typography variant="subtitle1">{`ג'ין: ${findTypeAsMoney(`ג'ין`)}  ש"ח`}</Typography> 
               </Grid>
             </Grid>   
           </div>

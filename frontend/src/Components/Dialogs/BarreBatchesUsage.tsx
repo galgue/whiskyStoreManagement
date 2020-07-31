@@ -9,6 +9,7 @@ import { workerTableOptions } from '../Tables/options/managerTableOptions';
 import { isValid } from '../../entity/Uses';
 import { Use } from '../../entity/Uses';
 import { UseController } from '../../controllers/use.controller';
+import { BerralBatchController } from '../../controllers/berralBatch.controller';
 
 const useStyles = makeStyles({
     button: {
@@ -29,26 +30,19 @@ export interface SimpleDialogProps {
     data: Use[];
     onOpen: (isOpen: boolean) => void;
     onFinish: () => void;
+    batchId: number;
 }
 
 export const BarrelBatchesUsageDialog = (props: SimpleDialogProps) => {
     const classes = useStyles();
-    const { open, data, onOpen, onFinish } = props;   
+    const { open, onOpen, onFinish, batchId } = props;   
+
+    const getData = () => {
+        return BerralBatchController.get(batchId).then(res => res.data.uses || []);
+    }
     
     let table:() => JSX.Element = TableFactory.create('שימוש', UseController, tableColumns, isValid, 
-    {...workerTableOptions, rowData: data, onFinish });
-
-    const initTable = () => {
-        table = TableFactory.create('שימוש', UseController, tableColumns, isValid, 
-        {...workerTableOptions, rowData: data });
-    }
-
-    initTable();
-
-    useEffect(() => {
-        initTable();
-    }, [data])
-    
+    {...workerTableOptions, getRowData: getData, onFinish });
     
     return (<>
         <Dialog aria-labelledby="simple-dialog-title" open={open}

@@ -4,6 +4,7 @@ import { BarChart } from '../modules/BarChart';
 import { ChartTitle } from '../modules/ChartTitle';
 import { BerralBatchController, BerralBatchStatisticsBy } from '../../../controllers/berralBatch.controller';
 import { PieChart } from '../modules/PieChart';
+import { BerralBatch } from '../../../entity/BerralBatch';
 
 export const BerralBatchStatisticsPieChart = () => {
     
@@ -14,15 +15,49 @@ export const BerralBatchStatisticsPieChart = () => {
       });
       const [type, setType] = useState<BerralBatchStatisticsBy>('berral-type');
 
+      const getTypesStat = async(batches: BerralBatch[]) => {
+          let starter: {[key: string]: number} = {};
+          return Object.entries(batches.reduce(function(rv, batch) {
+            if(!rv[batch.berralType.name]){
+              rv[batch.berralType.name] = 0;
+            }
+            rv[batch.berralType.name] += 1;
+            return rv;
+          }, starter)).map(entry => ({key: entry[0], value: entry[1]}));
+      }
+
+      const getChainStat = async(batches: BerralBatch[]) => {
+        let starter: {[key: string]: number} = {};
+        return Object.entries(batches.reduce(function(rv, batch) {
+          if(!rv[batch.prossesChain.name]){
+            rv[batch.prossesChain.name] = 0;
+          }
+          rv[batch.prossesChain.name] += 1;
+          return rv;
+        }, starter)).map(entry => ({key: entry[0], value: entry[1]}));
+       }
+
+       const getSpiritStat = async(batches: BerralBatch[]) => {
+        let starter: {[key: string]: number} = {};
+        return Object.entries(batches.reduce(function(rv, batch) {
+          if(!rv[batch.spiritType]){
+            rv[batch.spiritType] = 0;
+          }
+          rv[batch.spiritType] += 1;
+          return rv;
+        }, starter)).map(entry => ({key: entry[0], value: entry[1]}));
+       }
+
       const updateData = async () => {
         let allData:{[key: string] :{key: string, value: number}[]} = {
           'berral-type': [],
           'prosses-chain': [],
           'spirit-type': []
         };
-        allData['berral-type'] = (await BerralBatchController.getStatistic('berral-type'));
-        allData['prosses-chain'] = (await BerralBatchController.getStatistic('prosses-chain'));
-        allData['spirit-type'] = (await BerralBatchController.getStatistic('spirit-type'));
+        const batches = (await BerralBatchController.getAll()).data;
+        allData['berral-type'] = (await getTypesStat(batches));
+        allData['prosses-chain'] = (await getChainStat(batches));
+        allData['spirit-type'] = (await getSpiritStat(batches));
         setData(allData);
       };
     

@@ -77,7 +77,7 @@ export class BerralBatch {
             }
          } else {
             const days = new Date().getTime() - this.createdAt.getTime();
-            this.agingDuration = Math.round(Math.abs(days > 0 ? days : 0 / (oneDay)));
+            this.agingDuration = Math.round(Math.abs((days > 0 ? days : 0) / (oneDay)));
          }
     }
 
