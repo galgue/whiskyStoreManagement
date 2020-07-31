@@ -24,8 +24,17 @@ interface ChartProps {
     data: ChartData[],
 }
 
-function customizeText(arg: any) {
+function customizeTextChart(arg: any) {
   return `${arg.valueText} (${arg.percentText})`;
+}
+
+function customizeTextLegend(arg: any) {
+  let str = arg.pointName;
+  var position = str.search(/[\u0590-\u05FF]/);
+  if(position >= 0){
+    str = str.split("").reverse().join("");
+  }
+  return str;
 }
 
 export const PieChart = ({data}: ChartProps) => {
@@ -35,20 +44,21 @@ export const PieChart = ({data}: ChartProps) => {
       <PieChartDX id="pie"
         palette="Bright"
         dataSource={data}
-        rtlEnabled={true}
+        rtlEnabled={false}
       >
         <Legend
           orientation="horizontal"
-          itemTextPosition="right"
+          itemTextPosition="left"
           horizontalAlignment="center"
           verticalAlignment="bottom"
-          columnCount={4} />
+          customizeText={customizeTextLegend}
+          columnCount={5} />
         <Export enabled={true} />
         <Series argumentField="key" valueField="value">
           <Label
             visible={true}
             position="columns"
-            customizeText={customizeText}>
+            customizeText={customizeTextChart}>
             <Font size={16} />
             <Connector visible={true} width={0.5} />
           </Label>
