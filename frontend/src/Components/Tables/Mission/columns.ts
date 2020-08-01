@@ -29,7 +29,7 @@ export const tableColumns: Array<Column<Mission>> = [
         title: 'תיאור משימה', field: 'description',
     },
     {
-        title: 'יוצר המשימה', field: 'creatorId',removable: false, 
+        title: 'יוצר המשימה', field: 'creator.firstName',removable: false, 
         editComponent: (props) => 
             SelectEdit(() => UserController.getAll()
             .then(users => users.data && users.data.map(user => ({
@@ -46,7 +46,7 @@ export const tableColumns: Array<Column<Mission>> = [
         title: 'נוצרה בתאריך', field: 'createdOn', type: 'date',
     },
     {
-        title: 'מבצע המשימה', field: 'executeById',removable: false, 
+        title: 'מבצע המשימה', field: 'executeBy.firstName',removable: false, 
         editComponent: (props) => 
             SelectEdit(() => UserController.getAll()
             .then(users => users.data.map(user => ({
