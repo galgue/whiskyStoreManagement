@@ -21,14 +21,14 @@ export class BerralBatch {
     @JoinColumn({ name: "berralTypeId", referencedColumnName: 'id'})
     berralType: BerralType;
 
-    @Column()
+    @Column({ nullable: true })
     prossesChainId: number;
 
     @ManyToOne(() => ProssesChain, prossesChain => prossesChain.id)
     @JoinColumn({ name: "prossesChainId", referencedColumnName: 'id'})
     prossesChain: ProssesChain;
 
-    @Column()
+    @Column({ nullable: true })
     quantityAtFill: number;
 
     @Column({ nullable: true })
@@ -41,10 +41,10 @@ export class BerralBatch {
     @Column()
     alcoholPercentage: number;
 
-    @Column()
+    @Column({ nullable: true })
     spiritType: string;
 
-    @Column()
+    @Column({ nullable: true })
     ownership: string;
 
     @Column()

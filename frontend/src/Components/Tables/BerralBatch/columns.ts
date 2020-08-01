@@ -64,7 +64,7 @@ export const tableColumns: Array<Column<BerralBatch>> = [
         title: 'מיקום חבית במחסן', field: 'locationatWarehouse',validate:(rowData)=> (!!rowData.locationatWarehouse)
     },
     {
-        title: 'תאריך התחלה', field: 'createdAt', type: 'date',
+        title: 'תאריך התחלה', field: 'createdAt', type: 'date', validate:(rowData)=> (!!rowData.createdAt)
     },
     {
         title: 'תאריך סיום', field: 'endDate', type: 'date', editable: 'onUpdate'
