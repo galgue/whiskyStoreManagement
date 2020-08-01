@@ -55,10 +55,10 @@ export const tableColumns: Array<Column<BerralBatch>> = [
 
     },
     {
-        title: 'סוג תזקיק', field: 'spiritType',validate:(rowData)=> (!!rowData.spiritType)
+        title: 'סוג תזקיק', field: 'spiritType',validate:(rowData)=> (!!rowData.lastBerralBatchId) || (!!rowData.spiritType)
     },
     {
-        title: 'בעלים', field: 'ownership',validate:(rowData)=> (!!rowData.ownership)
+        title: 'בעלים', field: 'ownership',validate:(rowData)=> (!!rowData.lastBerralBatchId) || (!!rowData.ownership)
     },
     {
         title: 'מיקום חבית במחסן', field: 'locationatWarehouse',validate:(rowData)=> (!!rowData.locationatWarehouse)
