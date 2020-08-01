@@ -5,7 +5,7 @@ export const localization: Localization = {
         searchPlaceholder: 'חפש',
         exportAriaLabel: 'ייצא לאקסל',
         exportName: 'ייצא לאקסל',
-        exportTitle: 'ייצא לאקסל'
+        exportTitle: 'ייצא לאקסל',
     },
     body: {
         addTooltip: 'הוסף',

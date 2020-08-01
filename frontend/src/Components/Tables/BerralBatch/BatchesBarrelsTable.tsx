@@ -52,9 +52,11 @@ export const BatchesTable = () =>{
                     onClick: () => setOpenBarrelBatchesChartCard(true),
                 }
             ];
+    const workerOptions = workerTableOptions;
+
     const table = TableFactory.create('אצוות חביות', BerralBatchController, tableColumns,
         isValid,
-        {...(isManager? managerTableOptions: workerTableOptions), 
+        {...(managerTableOptions), 
             onSelectRow: setSelectedRow, selectedRow,
             actions
         });
