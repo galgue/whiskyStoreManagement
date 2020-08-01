@@ -26,7 +26,7 @@ export const tableColumns: Array<Column<Note>> = [
         title: 'הערה', field: 'content',removable: false,validate:(rowData)=>!!rowData.content
     },
     {
-        title: 'מספר עובד כותב הערה', field: 'creatorId', type:'numeric', removable: false,
+        title: 'מספר עובד כותב הערה', field: 'creator.firstName', type:'numeric', removable: false,
         editComponent: (props) => 
                 SelectEdit(() => UserController.getAll()
                 .then(users => users.data.map(user => ({

@@ -72,9 +72,7 @@ export class BerralBatch {
 
          if(this.endDate) {
             this.agingDuration = Math.round(Math.abs((this.createdAt.getTime() - this.endDate.getTime()) / (oneDay)));
-            if(this.endDate < new Date()){
-               this.isActive = false;
-            }
+            this.isActive = false;
          } else {
             const days = new Date().getTime() - this.createdAt.getTime();
             this.agingDuration = Math.round(Math.abs((days > 0 ? days : 0) / (oneDay)));

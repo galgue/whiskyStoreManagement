@@ -30,7 +30,7 @@ export const tableColumns: Array<Column<Use>> =
                 title: 'כמות השימוש', field: 'quantity',type:'numeric',removable: false,
             },
             {
-                title: 'מספר עובד כותב השימוש', field: 'creatorId', type:'numeric', removable: false,
+                title: 'עובד כותב השימוש', field: 'creator.firstName', type:'numeric', removable: false,
                 editComponent: (props) => 
                 SelectEdit(() => UserController.getAll()
                 .then(users => users.data.map(user => ({
